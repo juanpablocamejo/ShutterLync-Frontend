@@ -1,13 +1,18 @@
-<mat-toolbar *ngIf="project" class="actionsBar">
+<mat-toolbar class="actionsBar">
   <span><small>{{project.title}}</small></span>
 
   <span style="flex: 1 1 auto"></span>
-
-  <button mat-raised-button (click)="saveOrder()">Cargar Pedido</button>
+  <span class="counter" *ngIf="!project.order.confirmed && selectedItems>1">{{selectedItems}} <span fxHide.lt-sm>items
+      seleccionados</span></span>
+  <span class="counter" *ngIf="!project.order.confirmed && selectedItems==1">{{selectedItems}} <span fxHide.lt-sm>item
+      seleccionado</span></span>
+  <button mat-raised-button [disabled]="selectedItems==0 || project.order.confirmed" (click)="saveOrder()">Cargar
+    Pedido</button>
 </mat-toolbar>
 <div class="scrollable-view">
-  <mat-grid-list [cols]="cols" gutterSize="10px">
-    <mat-grid-tile *ngFor="let itm of previewItems()">
+  <h3 *ngIf="project.order.confirmed" style="text-align: center;">Su pedido ya ha sido confirmado.</h3>
+  <mat-grid-list *ngIf="project.previewItems && !project.order.confirmed" [cols]="cols" gutterSize="10px">
+    <mat-grid-tile *ngFor="let itm of project.previewItems">
       <app-preview-grid-item [item]="itm" (change)=onSelectionChange(itm,$event)></app-preview-grid-item>
     </mat-grid-tile>
   </mat-grid-list>

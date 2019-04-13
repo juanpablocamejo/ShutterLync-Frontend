@@ -2,7 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { MatCardModule, MatButtonModule, MatCheckboxModule, MatGridListModule, MatToolbarModule } from '@angular/material';
+import {
+  MatCardModule, MatButtonModule, MatCheckboxModule, MatGridListModule, MatToolbarModule,
+  MatDialogModule
+} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,12 +17,14 @@ import { PreviewGridItemComponent } from './preview-grid-item/preview-grid-item.
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
+import { SuccessDialogComponent } from './dialogs/success-dialog/success-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PreviewGridComponent,
-    PreviewGridItemComponent
+    PreviewGridItemComponent,
+    SuccessDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,8 +38,12 @@ import { FormsModule } from '@angular/forms';
     MatCardModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatDialogModule,
     FlexLayoutModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+  ],
+  entryComponents: [
+    SuccessDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

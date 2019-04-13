@@ -2,6 +2,6 @@
   <span>Shutterlync</span>
 </mat-toolbar>
 <div style="height:90vh; overflow: hidden;">
-  <app-preview-grid [project]="currentProject"></app-preview-grid>
+  <app-preview-grid *ngIf="currentProject" [project]="currentProject"></app-preview-grid>
 </div>
 <router-outlet></router-outlet>

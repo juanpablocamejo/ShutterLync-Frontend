@@ -3,6 +3,7 @@ import { Project } from '../models/project';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { Order } from '../models/order';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,8 @@ export class ProjectService {
     return this.http.get<Project>(this.projectUrl(_id));
   }
 
-  saveOrder(_id: string, items: string[]): Observable<any> {
-    console.log(_id, items);
-    return this.http.post(this.projectUrl(_id) + '/orders', { _id, items });
+  saveOrder(_id: string, order: Order): Observable<any> {
+    return this.http.post(this.projectUrl(_id) + '/orders', { order });
   }
 
 }

@@ -10,12 +10,21 @@ import { Project } from 'src/shared/models/project';
 })
 export class AppComponent implements OnInit {
   title = 'shutterlync';
-  private currentProject: Project;
+  private _currentProject: Project;
+
+  public get currentProject(): Project {
+    return this._currentProject;
+  }
+  public set currentProject(value: Project) {
+    this._currentProject = value;
+  }
+
+
 
   constructor(private projectService: ProjectService) { }
   ngOnInit() {
     this.projectService.getProject(environment.testProjectId).subscribe(
-      (project) => {
+      (project: Project) => {
         this.currentProject = project;
       }
     );
