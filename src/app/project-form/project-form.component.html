@@ -1,0 +1,89 @@
+<div>
+  <div style="text-align: center">
+    <h3>Nuevo proyecto</h3>
+  </div>
+  <mat-horizontal-stepper labelPosition="bottom" #stepper>
+    <mat-step [stepControl]="clientFormGroup">
+      <ng-template matStepLabel>Cliente</ng-template>
+      <form [formGroup]="clientFormGroup" (ngSubmit)="onClientSubmit()">
+        <div>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Apellido" formControlName="lastName" required />
+          </mat-form-field><span>&nbsp;</span>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Nombre" formControlName="name" required />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="wide">
+            <input type="email" matInput placeholder="Email" formControlName="email" required width="100%" />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="wide">
+            <input type="text" matInput placeholder="Dirección" formControlName="location" required />
+          </mat-form-field>
+        </div>
+        <div>
+          <button [disabled]="this.clientFormGroup.pristine || this.clientFormGroup.invalid" type="button"
+            mat-stroked-button (click)="next(stepper)" align="end">Siguiente (registrar usuario)</button>
+        </div>
+      </form>
+
+    </mat-step>
+    <mat-step [stepControl]="projectFormGroup">
+      <form [formGroup]="projectFormGroup" (ngSubmit)="onProjectSubmit()">
+        <ng-template matStepLabel>Evento</ng-template>
+        <div>
+          <mat-form-field>
+            <input type="text" class="wide" matInput placeholder="Título del evento" formControlName="title" required />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Fecha de realización" formControlName="date" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input class="wide" matInput type="text" placeholder="Dirección" formControlName="location" />
+          </mat-form-field>
+        </div>
+
+        <div>
+          <button type="button" mat-stroked-button matStepperNext>Siguiente</button>
+        </div>
+
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="projectFormGroup">
+      <form [formGroup]="projectFormGroup" (ngSubmit)="onProjectSubmit()">
+        <ng-template matStepLabel>Presupuesto</ng-template>
+        <div>
+          <mat-form-field>
+            <input matInput type="text" placeholder="Presupuesto" formControlName="quotation" />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput type="text" placeholder="Precio Foto Adicional" formControlName="aditionalItemPrice" />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field style="width:100% !important">
+            <textarea rows="3" matInput type="text" placeholder="Observaciones" formControlName="notes"></textarea>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <button [disabled]="!clientId || projectFormGroup.pristine || projectFormGroup.invalid" type="button"
+            mat-stroked-button color="primary" (click)="guardar()">Finalizar (guardar proyecto)</button>
+        </div>
+
+      </form>
+    </mat-step>
+
+  </mat-horizontal-stepper>
+</div>

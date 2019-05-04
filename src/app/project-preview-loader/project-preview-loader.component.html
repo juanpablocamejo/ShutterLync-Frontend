@@ -1,0 +1,16 @@
+<h4>
+  Imagenes de muestra:
+</h4>
+<div class="center">
+  <file-drop dropZoneLabel="Arrastre los archivos o la carpeta hasta aquí" (onFileDrop)="dropped($event)"
+    (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+  </file-drop>
+
+  <div class="scrollable-view">
+    <ul>
+      <li *ngFor="let item of files; let i=index">
+        <strong>{{ item.relativePath }}</strong>
+      </li>
+    </ul>
+  </div>
+</div>

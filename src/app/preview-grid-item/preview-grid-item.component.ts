@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PreviewItem } from 'src/shared/models/previewItem';
+import { PreviewItem } from 'src/shared/models/PreviewItem';
 import { environment } from '../../environments/environment';
 
 

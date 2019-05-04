@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000',
-  testProjectId: '5caebc864ba2e5384847f6b8'
+  testProjectId: '5cc9e907bd67622768a12163'
 };
 
 /*

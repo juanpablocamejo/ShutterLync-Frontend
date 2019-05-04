@@ -1,7 +1,7 @@
 <mat-toolbar style="height:45px; min-height:30px; background-color: #1da57a">
   <span>Shutterlync</span>
 </mat-toolbar>
+<ngx-loading-bar color="#114937" [includeSpinner]="true"></ngx-loading-bar>
 <div style="height:90vh; overflow: hidden;">
-  <app-preview-grid *ngIf="currentProject" [project]="currentProject"></app-preview-grid>
+  <router-outlet></router-outlet>
 </div>
-<router-outlet></router-outlet>
