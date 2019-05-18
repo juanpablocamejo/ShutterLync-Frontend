@@ -21,8 +21,12 @@ export class ProjectService {
     return this.http.get<Project>(this.projectUrl(), { params: { clientId } });
   }
 
+  getProjectsByOwner(userId: string) {
+
+  }
+
   saveOrder(projectId: string, order: Order): Observable<any> {
-    return this.http.post(this.projectUrl(projectId) + '/orders', { order });
+    return this.http.post(this.projectUrl(projectId) + '/orders', { ...order });
   }
 
   createProject(project: Project) {

@@ -2,20 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import {
-  MatCardModule, MatButtonModule, MatCheckboxModule, MatGridListModule, MatToolbarModule,
-  MatDialogModule,
-  MatStepperModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatDatepickerModule,
-  MatNativeDateModule
-} from '@angular/material';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MatSnackBar } from '@angular/material';
 import { InViewportModule } from 'ng-in-viewport';
 
 import { AppComponent } from './app.component';
@@ -32,7 +24,13 @@ import { ProjectPreviewLoaderComponent } from './project-preview-loader/project-
 import { FileDropModule } from 'ngx-file-drop';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
-
+import { AngularMaterialModule } from './angular-material/angular-material.module';
+import { ProjectGridComponent } from './project-grid/project-grid.component';
+import { ProjectGridItemComponent } from './project-grid-item/project-grid-item.component';
+import { LoginComponent } from './login/login.component';
+import { InputErrorComponent } from './input-error/input-error.component';
+import { HttpErrorInterceptor } from 'src/shared/interceptors/http-error.interceptor';
+import { NgxUploaderModule } from 'ngx-uploader';
 
 @NgModule({
   declarations: [
@@ -43,7 +41,11 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
     ClientViewComponent,
     StudioViewComponent,
     ProjectFormComponent,
-    ProjectPreviewLoaderComponent
+    ProjectPreviewLoaderComponent,
+    ProjectGridComponent,
+    ProjectGridItemComponent,
+    LoginComponent,
+    InputErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,21 +55,12 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    MatToolbarModule,
-    MatGridListModule,
-    MatCardModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatStepperModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
     FlexLayoutModule,
+    AngularMaterialModule,
     FileDropModule,
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
+    NgxUploaderModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   entryComponents: [
@@ -79,6 +72,10 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
     },
     {
       provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+    }, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

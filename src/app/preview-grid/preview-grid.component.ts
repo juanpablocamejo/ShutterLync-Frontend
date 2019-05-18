@@ -7,6 +7,7 @@ import { Order } from 'src/shared/models/Order';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material';
 import { SuccessDialogComponent } from '../dialogs/success-dialog/success-dialog.component';
 import { ActivatedRoute } from '@angular/router';
+import { calcGridColumns } from 'src/shared/utils/utils';
 
 
 
@@ -57,22 +58,13 @@ export class PreviewGridComponent implements OnInit {
   }
 
   getCols(): number {
-    const grid = new Map([
-      ['xs', 1], ['sm', 2], ['md', 3], ['lg', 4], ['xl', 4]
-    ]);
-    let res: number;
-    grid.forEach((nCols, mqAlias) => {
-      if (this.mediaObserver.isActive(mqAlias)) {
-        res = nCols;
-      }
-    });
-    return res;
+    return calcGridColumns(this.mediaObserver, { xs: 1, sm: 2, md: 3, lg: 4, xl: 4 });
   }
   ngOnInit() {
     const { projectId } = this.route.snapshot.params;
     this.projectService.getProject(projectId).subscribe(
       (project: Project) => {
-        this.project = project;
+        this.project = { ...project, order: new Order() };
       }
     );
   }

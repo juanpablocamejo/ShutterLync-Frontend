@@ -5,9 +5,8 @@ export class User extends BaseObject {
     id: string;
     name: string;
     lastName: string;
-    location: string;
     email: string;
-    password: string;
+    location: string;
     role: UserRole;
 
     constructor(fields?: Partial<User>) {

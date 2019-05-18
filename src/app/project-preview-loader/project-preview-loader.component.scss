@@ -3,8 +3,48 @@
   height: calc(70vh - 20px);
 }
 
-.sl-drop-zone {
-  border: 2px dotted #1da57a !important;
-  height: 70px;
-  border-radius: 2px;
+.drop-zone {
+  margin: 5px 5px 20px 5px;
+  min-width: 200px;
+  width: 100%;
+  background-color: transparent;
+  font-size: 15px;
+  font-weight: bold;
+  color: #1da57a;
+  display: block;
+
+  min-height: 80px;
+  padding: 3px;
+  border: 2px dashed #1da57a;
+}
+
+.drop-zone.is-drop-over {
+  color: #1da57a;
+  background-color: #e1eae7;
+}
+
+.upload-button {
+  margin-left: 5px;
+}
+
+.upload-list ul li {
+  list-style-type: none;
+  margin: 1px;
+  padding: 3px;
+  border: 1px solid #a5c8be;
+  border-radius: 3px;
+  font-size: 12px;
+  background-color: #d3eae3;
+}
+.upload-list ul {
+  margin-block-start: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding-block-start: 0;
+  padding-inline-start: 0;
+}
+.upload-list {
+  margin: 5px 5px 20px 5px;
+  border: 2px dashed #1da57a;
+  text-align: center;
 }

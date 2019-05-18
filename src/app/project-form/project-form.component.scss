@@ -3,5 +3,64 @@
 }
 
 mat-form-field.wide {
-  width: 368px !important;
+  width: 468px !important;
+}
+
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+input[type="date"]::-webkit-input-placeholder {
+  visibility: hidden !important;
+}
+label.mat-form-field-label {
+  font-size: 10px !important;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form mat-form-field {
+  width: 100%;
+  max-width: 650px;
+  margin-right: 10px;
+}
+form > fieldset {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+form {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+mat-form-field[appearance="fill"] input {
+  line-height: 24px;
+}
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}
+
+.mat-form-field-prefix,
+.mat-form-field-suffix {
+  display: inline-flex;
+  align-items: center;
+}
+.input-suffix {
+  display: inline-flex;
+  align-items: center;
+}
+
+input {
+  line-height: 1;
+}
+
+legend {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
 }

@@ -1,16 +1,51 @@
-<h4>
-  Imagenes de muestra:
-</h4>
-<div class="center">
-  <file-drop dropZoneLabel="Arrastre los archivos o la carpeta hasta aquí" (onFileDrop)="dropped($event)"
-    (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-  </file-drop>
+<div style="height:130px;">
+  <div style="text-align: center">
+    <h4>Imagenes de muestra</h4>
+  </div>
+  <fieldset style="border:none;" [disabled]="files.length && !allDone()">
+    <div fxLayout="row">
+      <div class="upload-list" *ngIf="files.length">
+        <ul style="width:200px; max-height:110px; overflow: auto;">
+          <li *ngFor="let item of files; let i=index" [matTooltip]="getFileError(item)">
+            <span>{{ item.name | lowercase }}</span>
+            <mat-progress-bar mode="determinate" [value]="item.progress.data.percentage"
+              [color]="item.responseStatus==200?'primary':'warn'"></mat-progress-bar>
+          </li>
+        </ul>
 
-  <div class="scrollable-view">
-    <ul>
-      <li *ngFor="let item of files; let i=index">
-        <strong>{{ item.relativePath }}</strong>
-      </li>
-    </ul>
+        <button *ngIf="allDone()" mat-button color="primary" (click)=" limpiarListado()">limpiar listado</button>
+      </div>
+      <div class="drop-zone" [ngClass]="{'block-mouse':files.length && !allDone()}" ngFileDrop [options]="options"
+        (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" [ngClass]="{ 'is-drop-over': dragOver }">
+        <h4>Arrastre las imagenes de muestra aquí</h4>
+        <div fxLayout="row" fxLayoutAlign="end end">
+          <label class="upload-button">
+            <button mat-raised-button color="primary" (click)="folderInput.click()">Subir Carpeta</button>
+            <input #folderInput style="display:none" className="upload-input" ngFileSelect [options]="options"
+              (uploadOutput)="onUploadOutput($event)" type="file" required webkitdirectory="true" mozdirectory="true"
+              msdirectory="true" odirectory="true" directory="true" allowdirs="true" [uploadInput]="uploadInput" />
+          </label>
+          <label class="upload-button">
+            <button mat-raised-button color="primary" (click)="fileInput.click()">Subir Archivo</button>
+            <input #fileInput style="display:none" type="file" ngFileSelect [options]="options"
+              (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"></label>
+        </div>
+      </div>
+
+
+    </div>
+  </fieldset>
+  <div class="scrollable-view" style="height: calc( 100vh - 250px )">
+
+    <mat-grid-list [cols]="cols" rowHeight="250px">
+      <mat-grid-tile *ngFor="let item of (previewItems || []).slice().reverse()">
+        <mat-card style="height:85%;width:85%;">
+          <img style="height:95%" mat-card-image [src]="imgUrl(item.fileData)">
+          <div style="text-align: center;">
+            <span style="font-size: 12px; ">{{item.fileName}}</span>
+          </div>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
   </div>
 </div>

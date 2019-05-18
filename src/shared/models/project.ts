@@ -12,7 +12,11 @@ export class Project extends BaseObject {
     aditionalItemPrice: number;
     order: Order;
     previewItems: PreviewItem[] = [];
-    clientId: string;
+    clientName: string;
+    clientLastName: string;
+    clientEmail: string;
+    clientLocation: string;
+    quantity: number;
 
     constructor(fields?: Partial<Project>) {
         super(fields);

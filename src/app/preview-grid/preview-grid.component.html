@@ -1,5 +1,5 @@
 <mat-toolbar *ngIf="project" class="actionsBar">
-  <span><small>{{project.title}}</small></span>
+  <span style="color:#ccc;"><small>{{project.title}}</small></span>
 
   <span style="flex: 1 1 auto"></span>
   <span class="counter" *ngIf="!project.order.confirmed && selectedItems>1">{{selectedItems}} <span fxHide.lt-sm>items

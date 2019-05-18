@@ -1,0 +1,43 @@
+.sl-container {
+  height: 100%;
+}
+@mixin respond-to($media) {
+  @if $media == xs {
+    @media only screen and (max-width: 320px) {
+      @content;
+    }
+  } @else if $media == md {
+    @media only screen and (min-width: 321px) and (max-width: 1024px) {
+      @content;
+    }
+  } @else if $media == lg {
+    @media only screen and (min-width: 1024px) {
+      @content;
+    }
+  }
+}
+.login-card {
+  background-color: rgba($color: #ffffffc4, $alpha: 0.8);
+  @include respond-to(xs) {
+    height: 350px;
+  }
+  @include respond-to(md) {
+    width: 400px;
+    height: 350px;
+  }
+  @include respond-to(lg) {
+    width: 500px;
+    height: 400px;
+  }
+  input {
+    margin-top: 10px;
+  }
+}
+
+form {
+  padding: 30px;
+  height: 65%;
+  @include respond-to(xs) {
+    padding: 10px;
+  }
+}

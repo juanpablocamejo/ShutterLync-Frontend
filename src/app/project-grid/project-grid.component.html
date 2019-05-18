@@ -1,0 +1,16 @@
+<mat-grid-list [cols]="cols" gutterSize="10px" rowHeight="150px">
+  <mat-grid-tile style="height: 100px;">
+    <mat-card style="width:80%;" fxLayout="row" fxAlign="center center">
+      <a mat-button (click)="newProject()" style="width:100%; height: 100%;">
+        <div>
+          <mat-icon style="font-size:40px;width:40px;height:40px;">add</mat-icon>
+        </div>
+        Nuevo proyecto
+      </a>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile *ngFor="let project of projects">
+    <a>proyecto</a>
+    <!-- <project-grid-item [project]="project"></project-grid-item> -->
+  </mat-grid-tile>
+</mat-grid-list>

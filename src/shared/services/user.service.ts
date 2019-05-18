@@ -8,9 +8,14 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class UserService {
+  private usersUrl = `${environment.apiUrl}/users`;
 
   constructor(private http: HttpClient) { }
-  private usersUrl = `${environment.apiUrl}/users`;
+
+  find(value: string): Observable<User[]> {
+    return this.http.get<User[]>(this.usersUrl, { params: { find: value } });
+  }
+
 
   createUser(user: User): Observable<string> {
     return this.http.post<string>(this.usersUrl, user);

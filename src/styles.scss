@@ -1,11 +1,39 @@
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import "theme.scss";
 
 html,
 body {
   overflow: hidden;
+  font-family: roboto;
 }
 
 .loading-bar-spinner {
   right: 20px !important;
   margin: 200px;
+}
+
+.msg-snackbar .mat-simple-snackbar-action {
+  color: map-get($mat-primary, "main");
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: roboto;
+  height: 100vh;
+  background: url("/assets/background.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.view-container {
+  height: 100%;
+  background-color: rgba($color: rgb(236, 236, 236), $alpha: 1);
+}
+
+.scrollable-view {
+  overflow: auto;
+  height: calc(100vh - 20px);
 }
