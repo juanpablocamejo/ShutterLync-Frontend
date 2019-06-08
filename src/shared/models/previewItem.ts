@@ -7,8 +7,7 @@ export class PreviewItem extends BaseObject {
     }
 
     id: string;
-    filename: string;
+    fileName: string;
     fileData: string;
     contentype: string;
-    selectedByClient: boolean;
 }

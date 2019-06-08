@@ -1,0 +1,22 @@
+@import "../project-grid.component.scss";
+
+.tag {
+  border-radius: 5px;
+  padding: 6px;
+}
+
+.tag.yellow {
+  background-color: #f3bd25;
+}
+.tag.green {
+  background-color: #a3efe8;
+}
+.tag.lightblue {
+  background-color: #81c9eb;
+}
+.tag.gray {
+  background-color: #a3b2be;
+}
+.tag.violet {
+  background-color: #d5c6fb;
+}

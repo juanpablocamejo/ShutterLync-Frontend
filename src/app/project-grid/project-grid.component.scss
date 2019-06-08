@@ -1,0 +1,29 @@
+.project-card {
+  height: 115px;
+  width: calc(100% - 18px);
+}
+mat-card {
+  height: 100px;
+  width: 90%;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+mat-card .title {
+  font-weight: bold;
+  margin-top: 0 !important;
+  white-space: nowrap;
+}
+
+mat-card:hover {
+  //   background-color: rgba(98, 192, 172, 0.438);
+
+  background-color: rgba(29, 165, 122, 0.35);
+}
+
+.new-project-icon {
+  padding-top: 0;
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}

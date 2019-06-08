@@ -3,6 +3,17 @@
   padding: 5px;
 }
 
-.example-spacer {
+.spacer {
   flex: 1 1 auto;
+  text-align: center;
+}
+
+.logo,
+.title {
+  cursor: pointer;
+}
+
+.logo:focus,
+.title:focus {
+  outline: 0 !important;
 }

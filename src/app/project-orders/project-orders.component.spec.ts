@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StudioViewComponent } from './studio-view.component';
+import { ProjectOrdersComponent } from './project-orders.component';
 
-describe('StudioViewComponent', () => {
-  let component: StudioViewComponent;
-  let fixture: ComponentFixture<StudioViewComponent>;
+describe('ProjectOrdersComponent', () => {
+  let component: ProjectOrdersComponent;
+  let fixture: ComponentFixture<ProjectOrdersComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StudioViewComponent ]
+      declarations: [ ProjectOrdersComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StudioViewComponent);
+    fixture = TestBed.createComponent(ProjectOrdersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

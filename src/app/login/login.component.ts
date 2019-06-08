@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuthenticationService } from 'src/shared/services/authentication.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,20 +10,35 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  constructor(builder: FormBuilder, private authService: AuthenticationService, private router: Router) {
+  constructor(builder: FormBuilder,
+              private authService: AuthenticationService,
+              private router: Router,
+              private route: ActivatedRoute) {
     this.loginForm = builder.group({
       email: [''],
       password: ['']
     });
   }
 
-  onClick() {
+  login() {
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password).subscribe(() => {
-      this.router.navigateByUrl('projects');
+      const returnUrl = this.route.snapshot.queryParams.returnUrl;
+      this.router.navigateByUrl(returnUrl || 'projects');
     });
   }
   ngOnInit() {
+    if (this.authService.currentUserValue) {
+      const returnUrl = this.route.snapshot.queryParams.returnUrl;
+      this.router.navigateByUrl(returnUrl || 'projects');
+    }
+
+  }
+
+  handleEnter(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.login();
+    }
   }
 
 }

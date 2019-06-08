@@ -29,8 +29,15 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/theme.scss"
+              "src/theme.scss",
+              "src/sass/mixins.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/",
+                "src/sass"
+              ]
+            },
             "scripts": [],
             "es5BrowserSupport": true
           },

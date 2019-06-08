@@ -8,3 +8,33 @@
   color: #1da57a;
   margin-right: 20px;
 }
+
+.grid-item {
+  height: calc(100% - 20px);
+  width: calc(100% - 20px);
+}
+
+mat-progress-spinner {
+  top: 15px;
+}
+
+button[disabled] {
+  background-color: rgba(196, 198, 198, 0.79) !important;
+}
+mat-toolbar > span,
+a {
+  font-size: 14px !important;
+  color: #1da57a;
+}
+mat-toolbar > span,
+mat-toolbar > button {
+  margin-left: 10px;
+}
+mat-chip {
+  font-size: 12px;
+}
+
+mat-toolbar > button.back {
+  margin-left: 0px;
+  bottom: 2px;
+}

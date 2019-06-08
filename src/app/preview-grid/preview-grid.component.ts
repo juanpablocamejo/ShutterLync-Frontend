@@ -1,70 +1,101 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Project } from 'src/shared/models/Project';
-import { ProjectService } from 'src/shared/services/project.service';
-import { PreviewItem } from 'src/shared/models/PreviewItem';
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { Order } from 'src/shared/models/Order';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material';
-import { SuccessDialogComponent } from '../dialogs/success-dialog/success-dialog.component';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { calcGridColumns } from 'src/shared/utils/utils';
+import { OrderState } from 'src/shared/models/enums/OrderState';
+import { Order } from 'src/shared/models/order';
+import { SuccessDialogComponent } from '../dialogs/success-dialog/success-dialog.component';
+import { ProjectService } from 'src/shared/services/project.service';
 
-
+interface SelectionDict { [id: string]: { selected: boolean }; }
 
 @Component({
   selector: 'app-preview-grid',
   templateUrl: './preview-grid.component.html',
   styleUrls: ['./preview-grid.component.scss']
 })
-export class PreviewGridComponent implements OnInit {
 
+
+export class PreviewGridComponent implements OnInit {
   private project: Project;
   public cols = 4;
-  public selectedItems = 0;
-
+  // public selectedItems = 0;
+  public selection: SelectionDict = {};
+  public orderState: OrderState;
+  public loaded = false;
   constructor(
     private projectService: ProjectService,
-    private mediaObserver: MediaObserver,
     public dialog: MatDialog,
     private route: ActivatedRoute) {
 
-    this.mediaObserver.asObservable()
-      .subscribe((change: MediaChange[]) => {
-        this.cols = this.getCols();
-      });
+  }
+  get selectedItems() {
+    return Object.values(this.selection).filter(itm => itm.selected).length || 0;
+  }
+  selected(id: string) {
+    return this.selection[id].selected;
+  }
+  get completedSelection() {
+    const [sel, total] = [this.selectedItems, this.project.quantity];
+    return sel >= total ? 100 : Math.round((sel * 100) / total);
+  }
+  get completedQuantity() {
+    const [sel, total] = [this.selectedItems, this.project.quantity];
+    return sel >= total ? total : sel;
+  }
+  get aditionalQuantity() {
+    const [sel, total] = [this.selectedItems, this.project.quantity];
+    return sel > total ? sel - total : 0;
+  }
+  onSelectionChange(id: string, selected: any) {
+    this.selection[id].selected = selected;
   }
 
-  onSelectionChange(previewItem: PreviewItem, selected: any) {
-    this.selectedItems += event ? 1 : -1;
+  get aditionalPrice() {
+    return this.project.aditionalItemPrice * (this.selectedItems - this.project.quantity);
   }
 
   openDialog = () => {
-    const cfg = new MatDialogConfig();
     const dialogRef = this.dialog.open(SuccessDialogComponent, {});
     dialogRef.beforeClose().subscribe(() => {
-      this.project.order.confirmed = true;
     });
   }
 
+  get confirmed() {
+    return this.orderState === OrderState.CONFIRMED;
+  }
+  get pending() {
+    return this.orderState === OrderState.PENDING;
+  }
 
+  getOrder() {
+    const items = Object.keys(this.selection).filter(id => this.selection[id].selected);
+    return new Order({ orderItems: items });
+  }
   saveOrder() {
-    const orderItems: PreviewItem[] = this.project.previewItems.filter((itm => itm.selectedByClient));
-    const order = new Order();
-    order.confirmed = true;
-    order.selectedItems = orderItems.map(itm => itm.id);
-    console.log(this.project.id, order);
-    this.projectService.saveOrder(this.project.id, order)
+    this.projectService.saveOrder(this.project.id, this.getOrder())
       .subscribe(this.openDialog);
   }
 
-  getCols(): number {
-    return calcGridColumns(this.mediaObserver, { xs: 1, sm: 2, md: 3, lg: 4, xl: 4 });
+  confirmOrder() {
+    this.projectService.confirmOrder(this.project.id, this.getOrder())
+      .subscribe(() => { this.orderState = OrderState.CONFIRMED; this.openDialog(); });
   }
+
+  loadOrder(project: Project) {
+    project.previewItems.forEach(itm => { this.selection[itm.id] = { selected: false }; });
+    project.order.orderItems.forEach(id => { this.selection[id] = { selected: true }; });
+    this.loaded = true;
+    this.orderState = project.order.state;
+  }
+
   ngOnInit() {
     const { projectId } = this.route.snapshot.params;
     this.projectService.getProject(projectId).subscribe(
       (project: Project) => {
-        this.project = { ...project, order: new Order() };
+        this.project = project;
+        if (!this.project.order) { this.project.order = new Order({ orderItems: [], state: OrderState.PENDING }); }
+        this.loadOrder(this.project);
       }
     );
   }

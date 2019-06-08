@@ -3,7 +3,8 @@
     <div style="text-align: center">
       <h4>Acceso a la aplicación</h4>
     </div>
-    <form autocomplete="off" novalidate [formGroup]="loginForm" [style.fontSize.px]="14" fxLayout="column">
+    <form autocomplete="off" novalidate [formGroup]="loginForm" [style.fontSize.px]="14" fxLayout="column"
+      (keypress)="handleEnter($event)">
       <mat-form-field>
         <input formControlName="email" type="text" maxlength="200" placeholder="email" matInput>
       </mat-form-field>
@@ -12,7 +13,7 @@
       </mat-form-field>
     </form>
     <mat-card-actions align="center">
-      <button mat-raised-button color="primary" (click)="onClick()">Acceder</button>
+      <button #btnAcceder mat-raised-button color="primary" (click)="login()">Acceder</button>
     </mat-card-actions>
   </mat-card>
 </div>

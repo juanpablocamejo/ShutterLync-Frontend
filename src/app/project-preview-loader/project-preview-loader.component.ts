@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input } from '@angular/core';
 import { UploadInput, UploadOutput, humanizeBytes, UploaderOptions, UploadFile } from 'ngx-uploader';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
@@ -8,6 +8,8 @@ import { PreviewItem } from 'src/shared/models/previewItem';
 import { MediaObserver, MediaChange } from '@angular/flex-layout';
 import { calcGridColumns } from 'src/shared/utils/utils';
 import { MatSnackBar } from '@angular/material';
+import { AuthenticationService } from 'src/shared/services/authentication.service';
+import { ProjectState } from 'src/shared/models/enums/ProjectState';
 
 
 @Component({
@@ -25,34 +27,23 @@ export class ProjectPreviewLoaderComponent implements OnInit {
   projectId: string;
   previewItems: PreviewItem[];
   cols = 4;
-
+  @Input() project: Project;
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private mediaObserver: MediaObserver,
-    private snackbar: MatSnackBar) {
+    private snackbar: MatSnackBar,
+    private auth: AuthenticationService) {
 
     this.options = { concurrency: 4, allowedContentTypes: ['image/jpeg', 'image/png'] };
     this.files = [];
     this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
     this.humanizeBytes = humanizeBytes;
-    this.mediaObserver.asObservable()
-      .subscribe((change: MediaChange[]) => {
-        this.cols = this.getCols();
-      });
-  }
 
-  getCols(): number {
-    return calcGridColumns(this.mediaObserver, { xs: 1, sm: 2, md: 4, lg: 5, xl: 6 });
   }
-
   ngOnInit(): void {
     this.projectId = this.route.snapshot.params.projectId;
-    this.projectService.getProject(this.projectId).subscribe(
-      (project: Project) => {
-        this.previewItems = project.previewItems;
-      }
-    );
+    this.previewItems = this.project.previewItems;
   }
   limpiarListado() { this.files = []; }
   onUploadOutput(output: UploadOutput): void {
@@ -67,7 +58,6 @@ export class ProjectPreviewLoaderComponent implements OnInit {
       case 'addedToQueue':
         if (typeof output.file !== 'undefined') {
           this.files.push(output.file);
-
         }
         break;
       case 'uploading':
@@ -106,6 +96,7 @@ export class ProjectPreviewLoaderComponent implements OnInit {
     const event: UploadInput = {
       type: 'uploadAll',
       url: `${environment.apiUrl}/files`,
+      headers: { Authorization: 'Bearer ' + this.auth.currentTokenValue },
       method: 'POST',
       data: { projectId: this.projectId }
     };
@@ -130,5 +121,10 @@ export class ProjectPreviewLoaderComponent implements OnInit {
   imgUrl(fileData: string) {
     return `${environment.apiUrl}/files/${fileData}`;
   }
+
+  get previewLoaded() {
+    return this.project.state !== ProjectState.CREATED;
+  }
+
 }
 

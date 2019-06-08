@@ -1,15 +1,12 @@
-<div style="height:130px;">
-  <div style="text-align: center">
-    <h4>Imagenes de muestra</h4>
-  </div>
-  <fieldset style="border:none;" [disabled]="files.length && !allDone()">
-    <div fxLayout="row">
+<div *ngIf="project" style="height:90px;">
+  <fieldset *ngIf="!previewLoaded" style="border:none;" [disabled]="files.length && !allDone()">
+    <div class="drop-zone-container">
       <div class="upload-list" *ngIf="files.length">
-        <ul style="width:200px; max-height:110px; overflow: auto;">
+        <ul style=" overflow: auto;">
           <li *ngFor="let item of files; let i=index" [matTooltip]="getFileError(item)">
             <span>{{ item.name | lowercase }}</span>
             <mat-progress-bar mode="determinate" [value]="item.progress.data.percentage"
-              [color]="item.responseStatus==200?'primary':'warn'"></mat-progress-bar>
+              [color]="(item.progress.status==2 && item.responseStatus!=200)?'warn':'primary'"></mat-progress-bar>
           </li>
         </ul>
 
@@ -18,7 +15,7 @@
       <div class="drop-zone" [ngClass]="{'block-mouse':files.length && !allDone()}" ngFileDrop [options]="options"
         (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" [ngClass]="{ 'is-drop-over': dragOver }">
         <h4>Arrastre las imagenes de muestra aquí</h4>
-        <div fxLayout="row" fxLayoutAlign="end end">
+        <div style="min-width:200px" fxLayout="row" fxLayoutAlign="end end">
           <label class="upload-button">
             <button mat-raised-button color="primary" (click)="folderInput.click()">Subir Carpeta</button>
             <input #folderInput style="display:none" className="upload-input" ngFileSelect [options]="options"
@@ -31,21 +28,15 @@
               (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"></label>
         </div>
       </div>
-
-
     </div>
   </fieldset>
   <div class="scrollable-view" style="height: calc( 100vh - 250px )">
-
-    <mat-grid-list [cols]="cols" rowHeight="250px">
+    <mat-grid-list [appResponsiveCols]="{ xs: 1, sm: 2, md: 3, lg: 4, xl: 4 }" gutterSize="10px">
       <mat-grid-tile *ngFor="let item of (previewItems || []).slice().reverse()">
-        <mat-card style="height:85%;width:85%;">
-          <img style="height:95%" mat-card-image [src]="imgUrl(item.fileData)">
-          <div style="text-align: center;">
-            <span style="font-size: 12px; ">{{item.fileName}}</span>
-          </div>
-        </mat-card>
+        <app-loader-preview-item class="grid-item" [item]="item">
+        </app-loader-preview-item>
       </mat-grid-tile>
     </mat-grid-list>
+
   </div>
 </div>

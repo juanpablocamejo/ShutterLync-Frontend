@@ -1,0 +1,16 @@
+.overlay {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(68, 68, 68, 0.322);
+  z-index: 99999;
+}
+.spinner {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}

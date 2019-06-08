@@ -1,0 +1,11 @@
+<mat-card inViewport [inViewportOptions]="{ threshold: [0] }" (inViewportAction)="onIntersection($event)" *ngIf="item">
+  <img *ngIf="!loaded" mat-card-image src="assets/img.jpg" style="height:100%;" />
+  <img *ngIf="visible" [hidden]="!loaded" mat-card-image [appXhrSrc]="imgUrl" src="assets/img.jpg" style="height:100%;"
+    (load)="onImgLoad($event)">
+
+
+  <mat-card-actions>
+    <mat-checkbox [checked]="selected" [disabled]="!editable" (change)="onSelectedChange($event)">Agregar al pedido
+    </mat-checkbox>
+  </mat-card-actions>
+</mat-card>

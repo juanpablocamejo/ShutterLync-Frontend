@@ -1,0 +1,32 @@
+<ng-container *ngIf="project" [ngSwitch]="userRole">
+  <app-preview-grid *ngSwitchCase="UserRole.CLIENT"></app-preview-grid>
+  <ng-container *ngSwitchCase="UserRole.STUDIO">
+    <mat-toolbar>
+      <button mat-icon-button class="back" color="primary" [routerLink]="['/projects']">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <button style="margin-bottom:2px;" mat-icon-button [matMenuTriggerFor]="menu" color="primary">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <div *ngFor="let itm of menuItems" mat-menu-item (click)="changeSection(itm.section)">
+          <span>{{itm.title}}</span>
+        </div>
+      </mat-menu>
+      <span fxHide.lt-sm>{{project.date | date:'dd/MM/yyyy'}} - {{project.title}}</span>
+      <span style="flex: 1 1 auto; text-align: center;"></span>
+      <span><button *ngIf="showConfirmPreview" mat-raised-button color="primary" (click)="confirmPreview()">Confirmar
+          Muestra</button></span>
+      <span><button *ngIf="showCompleteOrder" mat-raised-button color="primary" (click)="completeOrder()">Finalizar
+          Pedido</button></span>
+    </mat-toolbar>
+    <ng-container [ngSwitch]="projectSection">
+
+      <app-project-preview-loader *ngSwitchCase="'upload'" [project]="project">
+      </app-project-preview-loader>
+      <app-project-orders [project]="project" *ngSwitchCase="'orders'">
+      </app-project-orders>
+    </ng-container>
+  </ng-container>
+</ng-container>

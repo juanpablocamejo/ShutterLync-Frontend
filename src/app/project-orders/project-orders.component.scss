@@ -1,0 +1,41 @@
+.table-container {
+  height: 400px;
+  overflow: auto;
+}
+
+h5 {
+  margin: 5px 0 5px 0;
+}
+
+table {
+  width: 100%;
+  tr {
+    height: 35px;
+  }
+}
+
+.summary-container {
+  width: 300px;
+}
+.padd {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.summary-container {
+  flex: 0 1;
+  height: calc(100% - 300px);
+  background-color: white;
+  table {
+    tr {
+      border-bottom: 1px solid gray;
+    }
+    tr td {
+      padding: 0 10px 0 10px;
+    }
+    tr td:last-child {
+      text-align: right;
+    }
+  }
+}

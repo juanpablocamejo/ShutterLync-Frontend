@@ -32,8 +32,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                         // server-side error
                         errorMessage = error.error.message || 'Error al conectarse con el servidor.';
                     }
-                    // window.alert(errorMessage);
-                    this.error(errorMessage);
+                    const mustShow = !(error.error && error.error.showMessage === false);
+                    if (mustShow) {
+                        this.error(errorMessage);
+                    } else {
+                        this.error(errorMessage.substring(0, errorMessage.lastIndexOf(':')));
+                    }
                     console.log(error.error.message);
                     return throwError(errorMessage);
                 })

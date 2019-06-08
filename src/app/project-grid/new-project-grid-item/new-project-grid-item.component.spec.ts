@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClientViewComponent } from './client-view.component';
+import { NewProjectGridItemComponent } from './new-project-grid-item.component';
 
-describe('ClientViewComponent', () => {
-  let component: ClientViewComponent;
-  let fixture: ComponentFixture<ClientViewComponent>;
+describe('NewProjectGridItemComponent', () => {
+  let component: NewProjectGridItemComponent;
+  let fixture: ComponentFixture<NewProjectGridItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClientViewComponent ]
+      declarations: [ NewProjectGridItemComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClientViewComponent);
+    fixture = TestBed.createComponent(NewProjectGridItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

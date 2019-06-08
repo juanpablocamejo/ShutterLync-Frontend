@@ -1,0 +1,37 @@
+@mixin respond-to($media) {
+  @if $media == xs {
+    @media only screen and (max-width: 320px) {
+      @content;
+    }
+  } @else if $media == md {
+    @media only screen and (min-width: 321px) and (max-width: 1024px) {
+      @content;
+    }
+  } @else if $media == lg {
+    @media only screen and (min-width: 1024px) {
+      @content;
+    }
+  }
+}
+
+@mixin min-size($media, $w, $h) {
+  @if $media == xs {
+    @media only screen and (max-width: 320px) {
+      min-width: $w;
+      min-height: $h;
+      @content;
+    }
+  } @else if $media == md {
+    @media only screen and (min-width: 321px) and (max-width: 1024px) {
+      min-width: $w;
+      min-height: $h;
+      @content;
+    }
+  } @else if $media == lg {
+    @media only screen and (min-width: 1024px) {
+      min-width: $w;
+      min-height: $h;
+      @content;
+    }
+  }
+}

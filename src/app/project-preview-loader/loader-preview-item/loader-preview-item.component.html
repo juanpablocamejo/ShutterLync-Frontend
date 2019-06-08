@@ -1,0 +1,8 @@
+<mat-card inViewport [inViewportOptions]="{ threshold: [0] }" (inViewportAction)="onIntersection($event)" *ngIf="item">
+  <img *ngIf="!loaded" mat-card-image src="assets/img.jpg" style="height:100%;" />
+  <img *ngIf="visible" [hidden]="!loaded" mat-card-image [appXhrSrc]="imgUrl" src="assets/img.jpg" style="height:95%;"
+    (load)="onImgLoad($event)">
+  <mat-card-actions>
+    <div style="font-size: 12px">{{item.fileName}}</div>
+  </mat-card-actions>
+</mat-card>

@@ -24,9 +24,10 @@ class NavItem extends BaseObject {
 })
 export class AppComponent {
   title = 'ShutterLync';
+  sectionTitle: string;
   logged = false;
   isLoginPage = false;
-  constructor(private auth: AuthenticationService, private router: Router) {
+  constructor(private auth: AuthenticationService, private router: Router, private route: ActivatedRoute) {
     auth.currentUser.subscribe((usr) => {
       this.logged = !!usr;
     });
@@ -34,6 +35,10 @@ export class AppComponent {
       if (evt instanceof NavigationEnd) {
         this.isLoginPage = evt.urlAfterRedirects.toLowerCase() === '/login';
       }
+    });
+    route.data.subscribe((data) => {
+      console.log(data);
+      this.sectionTitle = data.title;
     });
   }
 
@@ -49,4 +54,6 @@ export class AppComponent {
     this.logged = false;
     this.router.navigateByUrl('/');
   }
+
+
 }

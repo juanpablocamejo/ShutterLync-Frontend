@@ -1,0 +1,44 @@
+<div *ngIf="project" class="scrollable-view padd">
+  <p *ngIf="!project.order" style="text-align:center">El cliente aún no ha cargado ningún pedido.</p>
+  <ng-container *ngIf="project.order">
+    <h5>Resumen</h5>
+    <div class="summary-container">
+      <table>
+        <tr>
+          <td>{{project.quantity}} fotos incluídas:</td>
+          <td>{{project.quotation | currency}}</td>
+        </tr>
+        <tr>
+          <td>{{project.quantity}} fotos adicionales: </td>
+          <td>{{aditionalCost() | currency}}</td>
+        </tr>
+        <tr>
+          <td>Total:</td>
+          <td>{{totalCost() | currency}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <h5>Archivos</h5>
+    <div class="table-container">
+
+      <table *ngIf="orderItems" mat-table [dataSource]="orderItems" class="mat-elevation-z8">
+        <!-- Item Column -->
+        <ng-container matColumnDef="nro">
+          <th mat-header-cell *matHeaderCellDef> N° </th>
+          <td mat-cell *matCellDef="let item"> {{item.nro}} </td>
+          <td mat-footer-cell *matFooterCellDef> Total </td>
+        </ng-container>
+        <!-- Item Column -->
+        <ng-container matColumnDef="item">
+          <th mat-header-cell *matHeaderCellDef> Archivo </th>
+          <td mat-cell *matCellDef="let item"> {{item.fileName}} </td>
+          <td mat-footer-cell *matFooterCellDef> Total </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </ng-container>
+</div>

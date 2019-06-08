@@ -1,5 +1,5 @@
 <div class="scrollable-view">
-  <div style="text-align: center">
+  <div style="text-align: center;">
     <h4>Nuevo proyecto</h4>
   </div>
 
@@ -34,7 +34,7 @@
           <mat-form-field>
             <input type="text" minlength="3" maxlength="150" matInput placeholder="Apellido" formControlName="lastName"
               required />
-            <mat-error *ngIf="!clientForm.pristine">{{getErrorMessage(clientForm,'lastName')}}</mat-error>
+            <mat-error>{{getErrorMessage(clientForm,'lastName')}}</mat-error>
           </mat-form-field>
           <mat-form-field>
             <input type="text" minlength="2" maxlength="150" matInput placeholder="Nombre" formControlName="name"

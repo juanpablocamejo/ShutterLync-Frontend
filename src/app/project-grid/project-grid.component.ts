@@ -3,6 +3,9 @@ import { MediaObserver, MediaChange } from '@angular/flex-layout';
 import { calcGridColumns } from 'src/shared/utils/utils';
 import { Router } from '@angular/router';
 import { ProjectService } from 'src/shared/services/project.service';
+import { AuthenticationService } from 'src/shared/services/authentication.service';
+import { UserRole } from 'src/shared/models/enums/UserRole';
+import { Project } from 'src/shared/models/Project';
 
 @Component({
   selector: 'app-project-grid',
@@ -11,25 +14,18 @@ import { ProjectService } from 'src/shared/services/project.service';
 })
 export class ProjectGridComponent implements OnInit {
   public cols = 4;
+  public projects: Project[] = [];
+  isClient: boolean;
   constructor(
-    private mediaObserver: MediaObserver,
     private router: Router,
-    private projectService: ProjectService
-
-  ) {
-    this.mediaObserver.asObservable()
-      .subscribe((change: MediaChange[]) => {
-        this.cols = this.getCols();
-      });
-  }
-
-  getCols(): number {
-    return calcGridColumns(this.mediaObserver, { xs: 1, sm: 2, md: 3, lg: 4, xl: 5 });
-  }
+    private projectService: ProjectService,
+    private auth: AuthenticationService
+  ) { }
   ngOnInit() {
-    // this.projectService.getProjectsByOwner()
+    const user = this.auth.currentUserValue;
+    this.isClient = user.role === UserRole.CLIENT;
+    this.projectService.getProjects()
+      .subscribe((projects) => { this.projects = projects; });
   }
-  newProject() {
-    this.router.navigateByUrl('/projects/new');
-  }
+
 }

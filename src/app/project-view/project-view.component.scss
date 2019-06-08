@@ -1,0 +1,18 @@
+.mat-toolbar {
+  height: 50px;
+  background-color: rgb(31, 31, 31);
+}
+
+mat-toolbar > span,
+a {
+  font-size: 14px !important;
+  color: #ccc;
+}
+mat-toolbar > span,
+mat-toolbar > button {
+  margin-left: 10px;
+}
+mat-toolbar > button.back {
+  margin-left: 0px;
+  bottom: 2px;
+}
