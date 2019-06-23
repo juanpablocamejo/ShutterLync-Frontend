@@ -3,13 +3,12 @@ import {
     HttpInterceptor,
     HttpHandler,
     HttpRequest,
-    HttpResponse,
     HttpErrorResponse
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { MatSnackBar, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -32,8 +31,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                         // server-side error
                         errorMessage = error.error.message || 'Error al conectarse con el servidor.';
                     }
-                    const mustShow = !(error.error && error.error.showMessage === false);
-                    if (mustShow) {
+                    const showDetail = !(error.error && error.error.showMessage === false);
+                    if (!errorMessage.includes(':') || showDetail) {
                         this.error(errorMessage);
                     } else {
                         this.error(errorMessage.substring(0, errorMessage.lastIndexOf(':')));

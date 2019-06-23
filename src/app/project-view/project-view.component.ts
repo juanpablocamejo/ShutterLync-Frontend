@@ -8,27 +8,29 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 import { SuccessDialogComponent } from '../dialogs/success-dialog/success-dialog.component';
 import { ProjectState } from 'src/shared/models/enums/ProjectState';
 import { Order } from 'src/shared/models/order';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-project-view',
   templateUrl: './project-view.component.html',
-  styleUrls: ['./project-view.component.scss']
+  styleUrls: ['./project-view.component.scss'],
+  providers: [DatePipe]
 })
 export class ProjectViewComponent implements OnInit {
   project: Project;
   public userRole: UserRole;
   public projectSection: string;
-  public title: string;
   public UserRole = UserRole;
 
   constructor(private auth: AuthenticationService,
               private router: Router,
               private route: ActivatedRoute,
               private projectService: ProjectService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private datePipe: DatePipe) {
     this.userRole = auth.currentUserValue.role;
     route.data.subscribe(
-      ({ section, title }) => { this.projectSection = section; this.title = title; }
+      ({ section }) => { this.projectSection = section; }
     );
   }
 
@@ -36,15 +38,20 @@ export class ProjectViewComponent implements OnInit {
     { section: 'upload', title: 'Carga de Imagenes' },
     { section: 'orders', title: 'Pedidos' }
   ];
-  get section() {
-    return this.route.snapshot.data.section;
-  }
-  get showConfirmPreview() {
-    return this.section === 'upload' && this.project.state === ProjectState.CREATED;
+
+  get title() {
+    return `${this.datePipe.transform(this.project.date, 'dd/MM/yyyy')} - ${this.project.title}`;
   }
 
-  get showCompleteOrder() {
-    return this.section === 'orders' && this.project.state === ProjectState.PENDING;
+  get shortTitle() {
+    const len = this.project.title.length;
+    const maxLen = 33;
+    const tooLarge = len > maxLen;
+    return tooLarge ? `${this.project.title.substr(0, maxLen - 3)}...` : this.project.title;
+  }
+
+  get section() {
+    return this.route.snapshot.data.section;
   }
 
   changeSection(section: string) {
@@ -64,7 +71,7 @@ export class ProjectViewComponent implements OnInit {
   }
 
   completeOrder() {
-    this.projectService.completeOrder(this.project.id, new Order(this.project.order))
+    this.projectService.completeOrder(this.project.id, this.project.order)
       .subscribe(this.openDialog);
   }
 

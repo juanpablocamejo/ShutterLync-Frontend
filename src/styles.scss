@@ -1,5 +1,7 @@
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 @import "theme.scss";
+@import "~saturn-datepicker/theming";
+@include sat-datepicker-theme($theme);
 
 html,
 body {
@@ -40,4 +42,8 @@ body {
 
 .mat-card-image {
   margin-bottom: 0px !important;
+}
+
+[hidden] {
+  display: none !important;
 }

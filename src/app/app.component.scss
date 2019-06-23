@@ -17,3 +17,15 @@
 .title:focus {
   outline: 0 !important;
 }
+
+div[mat-menu-item] {
+  a,
+  a:hover,
+  a:visited,
+  a:active {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    height: 100%;
+  }
+}

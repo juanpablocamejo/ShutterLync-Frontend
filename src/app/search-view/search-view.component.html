@@ -1,0 +1,87 @@
+<app-actions-toolbar [hideMenu]="true" title="Busqueda de proyectos"></app-actions-toolbar>
+<mat-accordion>
+  <mat-expansion-panel [expanded]="showFilters" (opened)="showFilters = true" (closed)="showFilters = false">
+    <mat-expansion-panel-header expandedHeight="44px">
+      <mat-panel-title>Filtros de Búsqueda </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form autocomplete="off" novalidate [formGroup]="searchForm" [style.fontSize.px]="14" fxLayout="column">
+      <div fxLayoutAlign="center center" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px"
+        fxLayoutGap.lt-md="0px">
+        <app-client-search-field [form]="searchForm" controlName="client"
+          placeholder="Cliente: apellido, nombre, email..." (clientSelected)="onClientSelected($event)"
+          fieldStyle="legacy" remove-host (clearSelection)="onClearClientSelection()">
+        </app-client-search-field>
+        <mat-form-field fxFlex>
+          <input formControlName="title" type="text" spellcheck="false" matInput placeholder="Título" />
+          <mat-error>{{getErrorMessage(searchForm,'title')}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayoutAlign="center center" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px"
+        fxLayoutGap.lt-md="0px">
+        <mat-form-field fxFlex>
+          <input formControlName="date" matInput placeholder="Fecha: (Desde - Hasta)" [satDatepicker]="datePicker">
+          <sat-datepicker #datePicker [rangeMode]="true">
+          </sat-datepicker>
+          <sat-datepicker-toggle matSuffix [for]="datePicker"></sat-datepicker-toggle>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Estado" formControlName="states" multiple>
+            <mat-option *ngFor="let state of projectStates" [value]="state[1]">{{state[1] | ProjectState}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <button fxFlex="0 0 200px" [disabled]="searchForm.invalid" type="button" color="primary" mat-raised-button
+          align="center" (click)="onSearch()">Buscar</button>
+      </div>
+    </form>
+    <div *ngIf="dirty && resultsLength==0">No se encontraron resultados</div>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel [hidden]="resultsLength==0" [expanded]="!showFilters">
+    <mat-expansion-panel-header expandedHeight="44px">
+      <mat-panel-title>
+        Resultados
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="table-container">
+
+      <table mat-table [dataSource]="data" class="results-table" matSort matSortActive="date" matSortDisableClear
+        matSortDirection="desc">
+        <!-- date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>fecha</th>
+          <td mat-cell *matCellDef="let row">{{row.date | date:'dd/MM/yyyy'}}</td>
+        </ng-container>
+
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
+          <td mat-cell *matCellDef="let row">{{row.title}}</td>
+        </ng-container>
+
+        <!-- client Column -->
+        <ng-container matColumnDef="client">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+            Cliente
+          </th>
+          <td mat-cell *matCellDef="let row">{{row.client.fullName}}</td>
+        </ng-container>
+
+        <!-- State Column -->
+        <ng-container matColumnDef="state">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
+          <td mat-cell *matCellDef="let row">{{row.state | ProjectState}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr class="data-row" mat-row *matRowDef="let row; columns: displayedColumns;"
+          (click)="router.navigateByUrl('/projects/'+row.id)"></tr>
+      </table>
+    </div>
+
+    <mat-paginator [length]="resultsLength" [pageSize]="10" [pageSizeOptions]="[10,25,50,100]"></mat-paginator>
+  </mat-expansion-panel>
+</mat-accordion>

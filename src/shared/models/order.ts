@@ -1,12 +1,22 @@
 import { BaseObject } from './BaseObject';
 import { OrderState } from '../models/enums/OrderState';
 
+interface SelectionDict { [id: string]: boolean; }
+
 export class Order extends BaseObject {
     state: OrderState = OrderState.PENDING;
-    orderItems: string[];
+    orderItems: string[] = [];
+    selection: SelectionDict = {};
 
-    constructor(fields?: Partial<Order>) {
+    constructor(fields: Partial<Order>, selectableItems: string[]) {
         super(fields);
+        this.loadSelection(selectableItems);
+    }
+
+    loadSelection(items: string[]) {
+        items.forEach(id => {
+            this.selection[id] = this.orderItems.includes(id);
+        });
     }
 
     get confirmed() {
@@ -18,8 +28,31 @@ export class Order extends BaseObject {
     complete() {
         this.state = OrderState.COMPLETED;
     }
+
     includes(id: string) {
-        return this.orderItems.includes(id);
+        return this.selection[id];
     }
+
+    addSelectableItem(id: string) {
+        this.selection[id] = false;
+    }
+    removeSelectableItem(id: string) {
+        this.selection = Object.entries(this.selection).reduce(
+            (acc, [k, v]) => (k === id ? { ...acc } : { ...acc, [k]: v }), {}
+        );
+    }
+
+    add(id: string) {
+        this.selection[id] = true;
+    }
+    remove(id: string) {
+        this.selection[id] = false;
+        this.orderItems = this.orderItems.filter(elem => elem !== id);
+    }
+
+    get selectedItems(): number {
+        return this.orderItems.length;
+    }
+
 
 }

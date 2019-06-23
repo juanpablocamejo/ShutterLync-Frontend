@@ -1,0 +1,38 @@
+.actions {
+  display: flexbox;
+  justify-items: center;
+}
+
+form {
+  padding: 20px;
+}
+
+mat-expansion-panel-header {
+  mat-panel-title {
+    justify-content: center;
+  }
+}
+
+td.mat-cell {
+  padding: 5px;
+}
+
+tr.mat-row {
+  height: 36px;
+}
+
+table.results-table {
+  width: 100%;
+}
+
+.icon-column {
+  width: 30px;
+}
+tr.data-row:hover {
+  background-color: rgba(29, 165, 122, 0.15);
+  cursor: pointer;
+}
+div.table-container {
+  max-height: calc(100vh - 282px);
+  overflow: auto;
+}

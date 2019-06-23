@@ -1,0 +1,18 @@
+<mat-toolbar>
+  <button title="Inicio" mat-icon-button class="back" color="primary" [routerLink]="['/projects']">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <button *ngIf="!hideMenu" style="margin-bottom:2px; margin-left:0;" mat-icon-button [matMenuTriggerFor]="menu"
+    color="primary">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <div *ngFor="let itm of menuItems" mat-menu-item (click)="changeSection(itm.section)">
+      <span>{{itm.title}}</span>
+    </div>
+  </mat-menu>
+  <span fxHide.lt-sm [title]="title">{{title}}</span>
+  <span fxHide.gt-xs [title]="title">{{shortTitleText}}</span>
+  <span style="flex: 1 1 auto; text-align: center;"></span>
+  <ng-content></ng-content>
+</mat-toolbar>

@@ -5,7 +5,15 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Order } from '../models/Order';
 import { ProjectState } from '../models/enums/ProjectState';
+import { ProjectFilter } from './ProjectFilter';
+import { map } from 'rxjs/operators';
+import { BaseObject } from '../models/BaseObject';
+import { PaginationOptions } from './PaginationOptions';
 
+interface PaginatedResult<T> {
+  totalCount: number;
+  results: T[];
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -15,11 +23,16 @@ export class ProjectService {
   constructor(private http: HttpClient) { }
 
   getProject(id: string): Observable<Project> {
-    return this.http.get<Project>(this.projectUrl(id));
+    return this.mapToEntity(Project, this.http.get<Project>(this.projectUrl(id)));
   }
 
   getProjects() {
-    return this.http.get<Project[]>(this.projectUrl());
+    const { DELIVERED, ...PendingStates } = ProjectState;
+    return this.mapArrayToEntities(Project, this.http.get<Project[]>(this.projectUrl(), {
+      params: {
+        states: Object.values(PendingStates).join(',')
+      }
+    }));
   }
 
   saveOrder(projectId: string, order: Order): Observable<any> {
@@ -43,4 +56,21 @@ export class ProjectService {
     return this.http.post(this.projectUrl(), project);
   }
 
+  search(filter: ProjectFilter, pagination: PaginationOptions) {
+    return this.mapPaginatedArrayToEntities(Project,
+      this.http.get<PaginatedResult<Project>>(this.projectUrl(), {
+        params: { ...filter.toHttpParams(), ...pagination }
+      }));
+  }
+
+  mapToEntity<T extends BaseObject>(type: new (fields: Partial<T>) => T, res: Observable<T>) {
+    return res.pipe(map(elem => new type(elem)));
+  }
+  mapArrayToEntities<T extends BaseObject>(type: new (fields: Partial<T>) => T, elems: Observable<T[]>) {
+    return elems.pipe(map(res => res.map(elem => new type(elem))));
+  }
+  mapPaginatedArrayToEntities<T extends BaseObject>(type: new (fields: Partial<T>) => T, elems: Observable<PaginatedResult<T>>) {
+    return elems.pipe(map(res => ({ ...res, results: res.results.map(elem => new type(elem)) })));
+  }
 }
+

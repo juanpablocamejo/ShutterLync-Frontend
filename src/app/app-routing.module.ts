@@ -1,15 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProjectFormComponent } from './project-form/project-form.component';
-import { ProjectGridComponent } from './project-grid/project-grid.component';
-import { PreviewGridComponent } from './preview-grid/preview-grid.component';
+import { ProjectFormComponent } from './new-project-view/project-form.component';
+import { ProjectGridComponent } from './home-view/project-grid.component';
+import { PreviewGridComponent } from './project-view/preview-grid/preview-grid.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from 'src/shared/guards/auth.guard';
 import { ProjectViewComponent } from './project-view/project-view.component';
+import { SearchViewComponent } from './search-view/search-view.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full', data: { header: false } },
-  { path: 'login', component: LoginComponent, data: { header: false } },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'search', component: SearchViewComponent },
+  {
+    path: 'projects:projectId',
+    component: ProjectViewComponent,
+  },
   {
     path: 'projects/:projectId/preview', component: PreviewGridComponent, canActivate: [AuthGuard],
     data: { title: 'Muestra - Carga de Pedido' }

@@ -54,6 +54,10 @@ export class AppComponent {
     this.logged = false;
     this.router.navigateByUrl('/');
   }
+  goto(path) {
+    console.log(path);
+    this.router.navigateByUrl(path);
+  }
 
 
 }

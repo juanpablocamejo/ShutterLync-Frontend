@@ -1,0 +1,31 @@
+.mat-input-wrapper {
+  width: 400px !important;
+}
+
+label.mat-form-field-label {
+  font-size: 12px !important;
+}
+
+form mat-form-field {
+  width: 100%;
+  max-width: 650px;
+  margin-right: 10px;
+}
+
+mat-form-field[appearance="fill"] input {
+  line-height: 24px;
+}
+
+.mat-form-field-prefix,
+.mat-form-field-suffix {
+  display: inline-flex;
+  align-items: center;
+}
+.input-suffix {
+  display: inline-flex;
+  align-items: center;
+}
+
+input {
+  line-height: 1;
+}
