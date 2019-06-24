@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Directive } from '@angular/core';
-import { PreviewItem } from 'src/shared/models/previewItem';
+import { PreviewItem } from 'src/shared/models/PreviewItem';
 import { environment } from 'src/environments/environment';
 
 @Component({

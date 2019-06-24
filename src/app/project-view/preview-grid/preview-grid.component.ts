@@ -1,11 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Project } from 'src/shared/models/Project';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { OrderState } from 'src/shared/models/enums/OrderState';
-import { Order } from 'src/shared/models/order';
 import { SuccessDialogComponent } from '../../dialogs/success-dialog/success-dialog.component';
 import { ProjectService } from 'src/shared/services/project.service';
+import { Project } from 'src/shared/models/Project';
+import { OrderState } from 'src/shared/models/enums/OrderState';
 
 @Component({
   selector: 'app-preview-grid',
@@ -29,8 +28,8 @@ export class PreviewGridComponent implements OnInit {
   selected(id: string) { return this.project.selected(id); }
   get selectedItems() { return this.project.selectedItems; }
   get completedSelection() { return this.project.completedSelection; }
-  get completedQuantity() { return this.completedQuantity; }
-  get aditionalQuantity() { return this.aditionalQuantity; }
+  get completedQuantity() { return this.project.completedQuantity; }
+  get aditionalQuantity() { return this.project.aditionalQuantity; }
   get aditionalPrice() { return this.project.aditionalPrice; }
 
   onSelectionChange(id: string, selected: any) {

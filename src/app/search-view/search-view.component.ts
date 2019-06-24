@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from 'src/shared/services/user.service';
-import { ProjectService } from 'src/shared/services/project.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatPaginator, MatSort } from '@angular/material';
-import { Project } from 'src/shared/models/Project';
-import { ProjectFilter } from 'src/shared/services/ProjectFilter';
 import { merge, of } from 'rxjs';
 import { startWith, switchMap, map, catchError, finalize } from 'rxjs/operators';
+import { UserService } from 'src/shared/services/user.service';
+import { ProjectService } from 'src/shared/services/project.service';
+import { Project } from 'src/shared/models/Project';
+import { ProjectFilter } from 'src/shared/services/ProjectFilter';
 import { ProjectState } from 'src/shared/models/enums/ProjectState';
 import { PaginationOptions } from 'src/shared/services/PaginationOptions';
 

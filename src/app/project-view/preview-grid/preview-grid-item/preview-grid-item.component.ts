@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { MatCheckboxChange } from '@angular/material';
 import { PreviewItem } from 'src/shared/models/PreviewItem';
 import { environment } from 'src/environments/environment';
-import { MatCheckboxChange } from '@angular/material';
 
 
 @Component({

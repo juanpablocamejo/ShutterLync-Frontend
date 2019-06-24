@@ -5,7 +5,7 @@
       <ng-container *ngSwitchCase="'upload'">
         <app-actions-toolbar [title]="title" [shortTitle]="project.title">
           <span>
-            <button mat-raised-button color="primary" (click)="confirmPreview()">Confirmar <span
+            <button *ngIf="project.created" mat-raised-button color="primary" (click)="confirmPreview()">Confirmar <span
                 fxHide.lt-sm>Muestra</span></button></span>
         </app-actions-toolbar>
         <app-project-preview-loader [project]="project">
@@ -13,8 +13,8 @@
       </ng-container>
       <ng-container *ngSwitchCase="'orders'">
         <app-actions-toolbar [title]="title" [shortTitle]="project.title">
-          <span><button mat-raised-button color="primary" (click)="completeOrder()">Finalizar <span
-                fxHide.lt-sm>Pedido</span></button></span>
+          <span><button *ngIf="project.orderLoaded" mat-raised-button color="primary"
+              (click)="completeOrder()">Finalizar <span fxHide.lt-sm>Pedido</span></button></span>
         </app-actions-toolbar>
         <app-project-orders [project]="project">
         </app-project-orders>

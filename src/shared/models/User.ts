@@ -1,5 +1,5 @@
 import { BaseObject } from './BaseObject';
-import { UserRole } from '../models/enums/UserRole';
+import { UserRole } from './enums/UserRole';
 
 export class User extends BaseObject {
     id: string;

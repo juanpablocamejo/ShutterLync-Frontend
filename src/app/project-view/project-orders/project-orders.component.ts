@@ -1,9 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Project } from 'src/shared/models/Project';
 import { MatDialog } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { Project } from 'src/shared/models/Project';
 import { OrderState } from 'src/shared/models/enums/OrderState';
-import { PreviewItem } from 'src/shared/models/previewItem';
 
 interface SelectionDict { [id: string]: { selected: boolean }; }
 interface TableItem { nro: number; fileName: string; cost: number; }

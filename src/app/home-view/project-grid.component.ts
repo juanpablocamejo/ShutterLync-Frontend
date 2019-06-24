@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MediaObserver, MediaChange } from '@angular/flex-layout';
-import { calcGridColumns } from 'src/shared/utils/utils';
 import { Router } from '@angular/router';
 import { ProjectService } from 'src/shared/services/project.service';
 import { AuthenticationService } from 'src/shared/services/authentication.service';

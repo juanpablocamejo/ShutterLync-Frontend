@@ -28,12 +28,15 @@ export class ProjectService {
 
   getProjects() {
     const { DELIVERED, ...PendingStates } = ProjectState;
+    const cmpByState = (a: Project, b: Project): -1 | 0 | 1 => (a.state > b.state) ? 1 : (a.state < b.state ? -1 : 0);
     return this.mapArrayToEntities(Project, this.http.get<Project[]>(this.projectUrl(), {
       params: {
         states: Object.values(PendingStates).join(',')
       }
-    }));
+    })).pipe(map(projects => projects.sort(cmpByState)));
   }
+
+
 
   saveOrder(projectId: string, order: Order): Observable<any> {
     return this.http.post(this.projectUrl(projectId) + '/orders', { ...order });

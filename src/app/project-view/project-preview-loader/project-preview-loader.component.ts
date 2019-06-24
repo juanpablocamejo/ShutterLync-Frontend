@@ -1,14 +1,11 @@
 import { Component, OnInit, EventEmitter, Input } from '@angular/core';
 import { UploadInput, UploadOutput, humanizeBytes, UploaderOptions, UploadFile } from 'ngx-uploader';
-import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
-import { Project } from 'src/shared/models/Project';
-import { ProjectService } from 'src/shared/services/project.service';
-import { PreviewItem } from 'src/shared/models/previewItem';
-import { MediaObserver, MediaChange } from '@angular/flex-layout';
-import { calcGridColumns } from 'src/shared/utils/utils';
 import { MatSnackBar } from '@angular/material';
 import { AuthenticationService } from 'src/shared/services/authentication.service';
+import { environment } from 'src/environments/environment';
+import { Project } from 'src/shared/models/Project';
+import { PreviewItem } from 'src/shared/models/PreviewItem';
 import { ProjectState } from 'src/shared/models/enums/ProjectState';
 
 

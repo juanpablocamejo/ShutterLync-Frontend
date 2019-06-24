@@ -1,5 +1,5 @@
 import { BaseObject } from './BaseObject';
-import { OrderState } from '../models/enums/OrderState';
+import { OrderState } from './enums/OrderState';
 
 interface SelectionDict { [id: string]: boolean; }
 
@@ -10,6 +10,7 @@ export class Order extends BaseObject {
 
     constructor(fields: Partial<Order>, selectableItems: string[]) {
         super(fields);
+        this.initialize();
         this.loadSelection(selectableItems);
     }
 
@@ -44,6 +45,7 @@ export class Order extends BaseObject {
 
     add(id: string) {
         this.selection[id] = true;
+        this.orderItems.push(id);
     }
     remove(id: string) {
         this.selection[id] = false;

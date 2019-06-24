@@ -9,7 +9,7 @@
           <ng-container [ngSwitch]="project.state">
             <span class="tag yellow" *ngSwitchCase="ProjectState.CREATED">Estamos preparando la muestra</span>
             <span class="tag violet" *ngSwitchCase="ProjectState.PREVIEW_LOADED">Ya puede cargar su pedido</span>
-            <span class="tag lightblue" *ngSwitchCase="ProjectState.PENDING">Estamos preparando su pedido</span>
+            <span class="tag lightblue" *ngSwitchCase="ProjectState.ORDER_LOADED">Estamos preparando su pedido</span>
             <span class="tag green" *ngSwitchCase="ProjectState.COMPLETED">Su pedido está listo para retirar</span>
           </ng-container>
         </p>
@@ -19,7 +19,7 @@
           <ng-container [ngSwitch]="project.state">
             <span class="tag lightblue" *ngSwitchCase="ProjectState.CREATED">{{project.state | ProjectState}}</span>
             <span class="tag green" *ngSwitchCase="ProjectState.PREVIEW_LOADED">{{project.state | ProjectState}}</span>
-            <span class="tag yellow" *ngSwitchCase="ProjectState.PENDING">{{project.state | ProjectState}}</span>
+            <span class="tag yellow" *ngSwitchCase="ProjectState.ORDER_LOADED">{{project.state | ProjectState}}</span>
             <span class="tag gray" *ngSwitchCase="ProjectState.COMPLETED">{{project.state | ProjectState}}</span>
           </ng-container>
         </p>

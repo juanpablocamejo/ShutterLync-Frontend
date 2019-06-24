@@ -1,6 +1,6 @@
 import { BaseObject } from './BaseObject';
-import { PreviewItem } from './previewItem';
-import { Order } from './order';
+import { PreviewItem } from './PreviewItem';
+import { Order } from './Order';
 import { ProjectState } from './enums/ProjectState';
 export class Client extends BaseObject {
     constructor(fields?: Partial<Client>) {
@@ -32,6 +32,7 @@ export class Project extends BaseObject {
 
     constructor(fields?: Partial<Project>) {
         super(fields);
+        this.initialize();
         this.previewItems = (fields.previewItems || []).map(i => new PreviewItem(i));
         this.order = new Order(fields.order, this.previewItems.map(itm => itm.id));
         this.client = new Client(fields.client);
@@ -55,6 +56,12 @@ export class Project extends BaseObject {
         return this.order.includes(id);
     }
 
+    get orderLoaded() {
+        return this.state === ProjectState.ORDER_LOADED;
+    }
+    get created() {
+        return this.state === ProjectState.CREATED;
+    }
     get completedSelection() {
         const [sel, total] = [this.selectedItems, this.quantity];
         return sel >= total ? 100 : Math.round((sel * 100) / total);

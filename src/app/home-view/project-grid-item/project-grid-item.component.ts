@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Project } from '../../../shared/models/Project';
-import { ProjectState } from '../../../shared/models/enums/ProjectState';
-import { AuthenticationService } from '../../../shared/services/authentication.service';
-import { UserRole } from '../../../shared/models/enums/UserRole';
+import { Project } from 'src/shared/models/Project';
+import { ProjectState } from 'src/shared/models/enums/ProjectState';
+import { AuthenticationService } from 'src/shared/services/authentication.service';
+import { UserRole } from 'src/shared/models/enums/UserRole';
 
 @Component({
   selector: 'app-project-grid-item',

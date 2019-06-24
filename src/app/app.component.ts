@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectService } from 'src/shared/services/project.service';
-import { environment } from 'src/environments/environment';
-import { Project } from 'src/shared/models/Project';
-import { UserRole } from 'src/shared/models/enums/UserRole';
 import { BaseObject } from 'src/shared/models/BaseObject';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { AuthenticationService } from 'src/shared/services/authentication.service';
+import { UserRole } from 'src/shared/models/enums/UserRole';
 
 class NavItem extends BaseObject {
   title: string;
@@ -55,8 +52,11 @@ export class AppComponent {
     this.router.navigateByUrl('/');
   }
   goto(path) {
-    console.log(path);
     this.router.navigateByUrl(path);
+  }
+
+  get isClient() {
+    return this.auth.currentUserValue && this.auth.currentUserValue.role === UserRole.CLIENT;
   }
 
 

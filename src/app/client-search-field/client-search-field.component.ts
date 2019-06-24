@@ -1,11 +1,10 @@
-import { Component, OnInit, Input, Output, ViewEncapsulation } from '@angular/core';
-import { UserService } from 'src/shared/services/user.service';
 import { Observable, of } from 'rxjs';
-import { User } from '../../shared/models/user';
-import { FormGroup } from '@angular/forms';
 import { startWith, debounceTime, distinctUntilChanged, switchMap, map, catchError } from 'rxjs/operators';
-import { EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, ViewEncapsulation, EventEmitter } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatFormFieldAppearance } from '@angular/material';
+import { UserService } from 'src/shared/services/user.service';
+import { User } from 'src/shared/models/User';
 
 @Component({
   selector: 'app-client-search-field',

@@ -1,14 +1,12 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/shared/services/authentication.service';
-import { UserRole } from 'src/shared/models/enums/UserRole';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { SuccessDialogComponent } from '../dialogs/success-dialog/success-dialog.component';
+import { AuthenticationService } from 'src/shared/services/authentication.service';
 import { ProjectService } from 'src/shared/services/project.service';
 import { Project } from 'src/shared/models/Project';
-import { MatDialog, MatDialogConfig } from '@angular/material';
-import { SuccessDialogComponent } from '../dialogs/success-dialog/success-dialog.component';
-import { ProjectState } from 'src/shared/models/enums/ProjectState';
-import { Order } from 'src/shared/models/order';
-import { DatePipe } from '@angular/common';
+import { UserRole } from 'src/shared/models/enums/UserRole';
 
 @Component({
   selector: 'app-project-view',

@@ -4,23 +4,25 @@
   <span class="spacer">
     {{sectionTitle}}
   </span>
-  <button style="margin-bottom:2px;" mat-icon-button [matMenuTriggerFor]="menu2">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <mat-menu #menu2="matMenu">
-    <div mat-menu-item (click)="goto('/projects')">
-      <mat-icon>apps</mat-icon>
-      <span>Inicio</span>
-    </div>
-    <div mat-menu-item (click)="goto('/projects/new')">
-      <mat-icon>add</mat-icon>
-      <span>Nuevo Proyecto</span>
-    </div>
-    <div mat-menu-item (click)="goto('/search')">
-      <mat-icon>search</mat-icon>
-      <span>Búsqueda</span>
-    </div>
-  </mat-menu>
+  <ng-container *ngIf="logged && !isClient">
+    <button style="margin-bottom:2px;" mat-icon-button [matMenuTriggerFor]="menu2">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu2="matMenu">
+      <div mat-menu-item (click)="goto('/projects')">
+        <mat-icon>apps</mat-icon>
+        <span>Inicio</span>
+      </div>
+      <div mat-menu-item (click)="goto('/projects/new')">
+        <mat-icon>add</mat-icon>
+        <span>Nuevo Proyecto</span>
+      </div>
+      <div mat-menu-item (click)="goto('/search')">
+        <mat-icon>search</mat-icon>
+        <span>Búsqueda</span>
+      </div>
+    </mat-menu>
+  </ng-container>
   <button *ngIf="logged" mat-icon-button color="account_circle" [matMenuTriggerFor]="menu">
     <mat-icon>account_circle</mat-icon>
   </button>

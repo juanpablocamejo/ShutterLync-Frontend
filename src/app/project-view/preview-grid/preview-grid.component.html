@@ -1,5 +1,5 @@
 <mat-toolbar *ngIf="project" class="actionsBar">
-  <button fxHide.lt-md mat-icon-button class="back" color="primary" [routerLink]="['/projects']">
+  <button mat-icon-button class="back" color="primary" [routerLink]="['/projects']">
     <mat-icon>arrow_back</mat-icon>
   </button>
   <span fxHide.lt-md style="color:#ccc;">{{project.date | date:'dd/MM/yyyy'}} - {{project.title}} </span>
@@ -44,8 +44,8 @@
     Le informaremos cuando el fotografo haya finalizado el trabajo.</h5>
   <mat-grid-list *ngIf="loaded" [appResponsiveCols]="{ xs: 1, sm: 2, md: 3, lg: 4, xl: 4 }" gutterSize="10px">
     <mat-grid-tile *ngFor="let itm of project.previewItems">
-      <app-preview-grid-item [editable]="pending" class="grid-item" [item]="itm" [selected]="selected(itm.id)"
-        (change)=onSelectionChange(itm.id,$event)>
+      <app-preview-grid-item remove-host [editable]="pending" class="grid-item" [item]="itm"
+        [selected]="selected(itm.id)" (change)=onSelectionChange(itm.id,$event)>
       </app-preview-grid-item>
     </mat-grid-tile>
   </mat-grid-list>

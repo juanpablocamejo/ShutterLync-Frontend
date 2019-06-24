@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatStepper, MatDialog, MatDialogConfig } from '@angular/material';
-import { User } from 'src/shared/models/user';
-import { UserRole } from 'src/shared/models/enums/UserRole';
-import { UserService } from 'src/shared/services/user.service';
-import { ProjectService } from 'src/shared/services/project.service';
-import { Project, Client } from 'src/shared/models/project';
-import { SuccessDialogComponent } from '../dialogs/success-dialog/success-dialog.component';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { startWith, debounceTime, switchMap, catchError, map, distinctUntilChanged } from 'rxjs/operators';
+import { UserService } from 'src/shared/services/user.service';
+import { ProjectService } from 'src/shared/services/project.service';
+import { SuccessDialogComponent } from 'src/app/dialogs/success-dialog/success-dialog.component';
+import { User } from 'src/shared/models/User';
+import { UserRole } from 'src/shared/models/enums/UserRole';
+import { Project, Client } from 'src/shared/models/Project';
 
 @Component({
   selector: 'app-project-form',
