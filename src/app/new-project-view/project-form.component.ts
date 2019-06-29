@@ -75,7 +75,6 @@ export class ProjectFormComponent implements OnInit {
           return of([]);
         }
       }),
-      // map(usr => { console.log(usr); return usr; })
     );
   }
 

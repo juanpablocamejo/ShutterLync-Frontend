@@ -67,7 +67,6 @@ export class ProjectOrdersComponent implements OnInit {
 
   markItemAsDone(file: any) {
     const item = this.getItemByName(file.name);
-    console.log(file.name, item);
     if (!item || item.done) { return; }
 
     this.project.markItemAsDone(item.id, true);

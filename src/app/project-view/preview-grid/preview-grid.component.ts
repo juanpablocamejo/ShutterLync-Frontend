@@ -49,8 +49,14 @@ export class PreviewGridComponent implements OnInit {
   get confirmed() {
     return this.order.state === OrderState.CONFIRMED;
   }
+  get completed() {
+    return this.order.state === OrderState.COMPLETED;
+  }
   get pending() {
     return this.order.state === OrderState.PENDING;
+  }
+  get delivered() {
+    return this.order.state === OrderState.DELIVERED;
   }
 
   saveOrder() {

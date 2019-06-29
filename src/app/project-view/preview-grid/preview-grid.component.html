@@ -52,7 +52,10 @@
 
 <div *ngIf="project" class="scrollable-view">
   <h5 *ngIf="confirmed" style="text-align: center;">Su pedido de Edición/Impresión se encuentra confirmado.
-    Le informaremos cuando el fotografo haya finalizado el trabajo.</h5>
+    Le informaremos cuando el fotógrafo haya finalizado el trabajo.</h5>
+  <h5 *ngIf="completed" style="text-align: center;">Su pedido de Edición/Impresión se encuentra listo para retirar.
+    Ya puede coordinar la entrega del mismo con su fotografo.</h5>
+  <h5 *ngIf="delivered" style="text-align: center;">El pedido ya fue entregado.</h5>
   <mat-grid-list *ngIf="loaded" [appResponsiveCols]="{ xs: 1, sm: 2, md: 3, lg: 4, xl: 4 }" gutterSize="10px">
     <mat-grid-tile *ngFor="let itm of project.previewItems">
       <app-preview-grid-item remove-host [editable]="pending" class="grid-item" [item]="itm"
