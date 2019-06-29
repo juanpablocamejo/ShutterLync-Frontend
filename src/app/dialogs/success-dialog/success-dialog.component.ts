@@ -11,7 +11,7 @@ export class SuccessDialogComponent {
   constructor(public dialogRef: MatDialogRef<SuccessDialogComponent>) { }
 
   closeDialog() {
-    this.dialogRef.close('Pizza!');
+    this.dialogRef.close();
   }
 
 }

@@ -28,14 +28,25 @@
     </span>
   </ng-template>
   <ng-template [ngIf]="pending" #actions>
-
-    <button mat-raised-button [disabled]="selectedItems==0 || confirmed" (click)="saveOrder()">
+    <button fxHide.xs mat-raised-button [disabled]="selectedItems==0 || confirmed" (click)="saveOrder()">
       <span>Guardar</span>
     </button>
-    <button mat-raised-button color="primary" [disabled]="selectedItems==0 || completedSelection<100 || confirmed"
-      (click)="confirmOrder()">
+    <button fxHide.xs mat-raised-button color="primary"
+      [disabled]="selectedItems==0 || completedSelection<100 || confirmed" (click)="confirmOrder()">
       <span>Confirmar</span><span fxHide.lt-md> Pedido</span>
     </button>
+    <button fxHide.gt-xs mat-icon-button [matMenuTriggerFor]="vertMenu" color="primary" aria-label="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #vertMenu="matMenu">
+      <button mat-menu-item [disabled]="selectedItems==0 || confirmed" (click)="saveOrder()">
+        <span>Guardar</span>
+      </button>
+      <button mat-menu-item [disabled]="selectedItems==0 || completedSelection<100 || confirmed"
+        (click)="confirmOrder()">
+        <span>Confirmar pedido</span>
+      </button>
+    </mat-menu>
   </ng-template>
 </mat-toolbar>
 

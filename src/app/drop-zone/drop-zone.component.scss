@@ -1,0 +1,67 @@
+.drop-zone {
+  flex: 7 0;
+  min-width: 300px;
+  background-color: transparent;
+  font-size: 15px;
+  font-weight: bold;
+  color: #1da57a;
+  display: block;
+
+  min-height: 80px;
+  padding: 3px;
+  border: 2px dashed #1da57a;
+}
+div.drop-zone.disabled {
+  border-color: gray;
+  color: gray;
+}
+
+.drop-zone.is-drop-over {
+  color: #1da57a;
+  background-color: #e1eae7;
+}
+
+.upload-button {
+  margin-left: 5px;
+}
+
+.upload-list ul li {
+  flex: 1;
+  list-style-type: none;
+  margin: 1px;
+  padding: 3px;
+  border: 1px solid #a5c8be;
+  border-radius: 3px;
+  font-size: 12px;
+  background-color: #d3eae3;
+}
+.upload-list ul {
+  display: flex;
+  max-height: 90px;
+
+  flex-direction: column;
+  flex: 1;
+  margin-block-start: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding-block-start: 0;
+  padding-inline-start: 0;
+}
+.upload-list {
+  max-height: 130px;
+  flex: 3 0;
+  min-width: 250px;
+  margin: 0 5px 0 0;
+  border: 2px dashed #1da57a;
+  text-align: center;
+}
+
+.block-mouse {
+  pointer-events: none;
+}
+.drop-zone-container {
+  width: 100%;
+}
+h4 {
+  text-align: center;
+}

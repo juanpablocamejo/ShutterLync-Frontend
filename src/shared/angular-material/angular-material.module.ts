@@ -24,7 +24,8 @@ import {
   MatExpansionModule,
   MatPaginatorModule,
   MatSortModule,
-  MatSelectModule
+  MatSelectModule,
+  MatButtonToggleModule
 } from '@angular/material';
 
 const imports = [
@@ -57,7 +58,8 @@ const imports = [
   MatExpansionModule,
   MatPaginatorModule,
   MatSortModule,
-  MatSelectModule
+  MatSelectModule,
+  MatButtonToggleModule
 ];
 
 

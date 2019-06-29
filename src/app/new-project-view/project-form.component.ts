@@ -9,7 +9,8 @@ import { ProjectService } from 'src/shared/services/project.service';
 import { SuccessDialogComponent } from 'src/app/dialogs/success-dialog/success-dialog.component';
 import { User } from 'src/shared/models/User';
 import { UserRole } from 'src/shared/models/enums/UserRole';
-import { Project, Client } from 'src/shared/models/Project';
+import { Project } from 'src/shared/models/Project';
+import { Client } from 'src/shared/models/Client';
 
 @Component({
   selector: 'app-project-form',
@@ -26,7 +27,8 @@ export class ProjectFormComponent implements OnInit {
   validationMessages: { [key: string]: string } = {
     email: 'ingrese un email válido',
     required: 'el campo es obligatorio',
-    minLenght: 'el texto es demasiado corto',
+    minlength: 'el texto es demasiado corto',
+    maxlength: 'el texto es demasiado largo',
   };
   loading: boolean;
 
@@ -49,7 +51,7 @@ export class ProjectFormComponent implements OnInit {
       location: ['', Validators.required]
     });
     this.eventForm = this.formBuilder.group({
-      title: ['', Validators.required],
+      title: ['', [Validators.required, Validators.minLength(3)]],
       date: ['', Validators.required],
       location: ['', Validators.required],
     });
@@ -129,8 +131,8 @@ export class ProjectFormComponent implements OnInit {
   getErrorMessage(form: FormGroup, controlName: string) {
     const errMap = form.controls[controlName].errors || {};
     const errors = Object.keys(errMap);
-    if (!form.controls[controlName].pristine && errors.length) { console.log(controlName, errors); }
-    return errors.length ? this.validationMessages[errors[0]] : '';
+    const msg = errors.length ? this.validationMessages[errors[0]] : '';
+    return msg;
   }
   openDialog() {
     const cfg = new MatDialogConfig();

@@ -7,6 +7,8 @@ import { AuthenticationService } from 'src/shared/services/authentication.servic
 import { ProjectService } from 'src/shared/services/project.service';
 import { Project } from 'src/shared/models/Project';
 import { UserRole } from 'src/shared/models/enums/UserRole';
+import { ConfirmationDialogComponent } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
+import { ProjectState } from 'src/shared/models/enums/ProjectState';
 
 @Component({
   selector: 'app-project-view',
@@ -56,26 +58,82 @@ export class ProjectViewComponent implements OnInit {
     this.router.navigateByUrl(`/projects/${this.route.snapshot.params.projectId}/${section}`);
   }
 
-  openDialog = () => {
+  successDialog = (redirect: boolean) => () => {
     const dialogRef = this.dialog.open(SuccessDialogComponent, {});
-    dialogRef.beforeClose().subscribe(() => {
-      this.router.navigateByUrl('/projects');
-    });
+    const obs = dialogRef.beforeClose();
+    if (redirect) {
+      obs.subscribe(() => {
+        this.router.navigateByUrl('/projects');
+      });
+    }
+  }
+
+  confirmationDialog = (title: string, text?: string) => {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title, text, action: 'Aceptar' } });
+    return dialogRef.beforeClose();
   }
 
   confirmPreview() {
-    this.projectService.confirmPreview(this.project.id)
-      .subscribe(this.openDialog);
+    this.confirmationDialog('¿Desea confirmar la muestra?',
+      `(${this.project.previewItems.length} items cargados)`
+    ).subscribe(
+      (value) => {
+        if (value) {
+          this.projectService.confirmPreview(this.project.id)
+            .subscribe(this.successDialog(true));
+        }
+      }
+    );
+
   }
 
+  saveOrder() {
+    this.confirmationDialog('¿Desea Guardar los cambios?').subscribe(
+      (value) => {
+        if (value) {
+          this.projectService.saveOrder(this.project.id, this.project.order)
+            .subscribe(this.successDialog(false));
+        }
+      }
+    );
+
+  }
   completeOrder() {
-    this.projectService.completeOrder(this.project.id, this.project.order)
-      .subscribe(this.openDialog);
+    this.confirmationDialog('¿Desea marcar el pedido como Listo para Entrega?').subscribe(
+      (value) => {
+        if (value) {
+          this.projectService.completeOrder(this.project.id, this.project.order)
+            .subscribe(this.successDialog(true));
+        }
+      }
+    );
+
+  }
+  markAsDelivered() {
+    this.confirmationDialog('¿Desea marcar el pedido como Entregado?').subscribe(
+      (value) => {
+        if (value) {
+          this.projectService.markOrderAsDelivered(this.project.id, this.project.order)
+            .subscribe(this.successDialog(true));
+        }
+      }
+    );
+
+  }
+  get orderProgress() {
+    return this.project.orderProgress;
+  }
+  resolveSection() {
+    const section = this.project.created ? 'upload' : 'orders';
+    this.changeSection(section);
   }
 
   ngOnInit() {
     this.projectService.getProject(this.route.snapshot.params.projectId)
-      .subscribe(proj => { this.project = proj; });
+      .subscribe(proj => {
+        this.project = proj;
+        if (!this.section) { this.resolveSection(); }
+      });
   }
 
 }

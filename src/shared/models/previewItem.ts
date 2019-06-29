@@ -7,8 +7,7 @@ export class PreviewItem extends BaseObject {
     contentype: string;
 
     constructor(fields?: Partial<PreviewItem>) {
-        super(fields);
-        this.initialize();
+        super(); this.init(fields);
     }
 
 }

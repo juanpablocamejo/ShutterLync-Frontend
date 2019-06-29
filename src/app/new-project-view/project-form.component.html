@@ -48,7 +48,8 @@
         <ng-template matStepLabel>Evento</ng-template>
         <div>
           <mat-form-field>
-            <input type="text" matInput placeholder="Título del evento" formControlName="title" required />
+            <input type="text" matInput minlength="3" placeholder="Título del evento" formControlName="title"
+              required />
             <mat-error>{{getErrorMessage(eventForm,'title')}}</mat-error>
 
           </mat-form-field>
@@ -72,7 +73,8 @@
         </div>
 
         <div>
-          <button type="button" mat-stroked-button (click)="next(stepper)">Siguiente</button>
+          <button type="button" [disabled]="eventForm.pristine || eventForm.invalid" mat-stroked-button
+            (click)="next(stepper)">Siguiente</button>
         </div>
 
       </form>
@@ -103,7 +105,8 @@
         </div>
         <div>
           <mat-form-field style="width:100% !important">
-            <textarea rows="3" matInput type="text" placeholder="Observaciones" formControlName="notes"></textarea>
+            <textarea rows="3" matInput type="text" maxlength="500" placeholder="Observaciones"
+              formControlName="notes"></textarea>
             <mat-error>{{getErrorMessage(quotationForm,'notes')}}</mat-error>
 
           </mat-form-field>

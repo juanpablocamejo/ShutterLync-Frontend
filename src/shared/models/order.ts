@@ -1,37 +1,35 @@
 import { BaseObject } from './BaseObject';
 import { OrderState } from './enums/OrderState';
+import { OrderItem } from './OrderItem';
 
 interface SelectionDict { [id: string]: boolean; }
-
 export class Order extends BaseObject {
     state: OrderState = OrderState.PENDING;
-    orderItems: string[] = [];
+    orderItems: OrderItem[] = [];
     selection: SelectionDict = {};
 
     constructor(fields: Partial<Order>, selectableItems: string[]) {
-        super(fields);
-        this.initialize();
+        super(); this.init(fields);
         this.loadSelection(selectableItems);
     }
 
     loadSelection(items: string[]) {
+        const fn = (id: string) => (itm: OrderItem) => {
+            return itm.previewItemId === id;
+        };
         items.forEach(id => {
-            this.selection[id] = this.orderItems.includes(id);
+            this.selection[id] = this.orderItems.some(fn(id));
         });
     }
 
-    get confirmed() {
-        return this.state === OrderState.CONFIRMED;
-    }
     confirm() {
         this.state = OrderState.CONFIRMED;
     }
     complete() {
         this.state = OrderState.COMPLETED;
     }
-
-    includes(id: string) {
-        return this.selection[id];
+    markAsDelivered() {
+        this.state = OrderState.DELIVERED;
     }
 
     addSelectableItem(id: string) {
@@ -45,16 +43,33 @@ export class Order extends BaseObject {
 
     add(id: string) {
         this.selection[id] = true;
-        this.orderItems.push(id);
+        this.orderItems.push(new OrderItem({ previewItemId: id }));
     }
     remove(id: string) {
         this.selection[id] = false;
-        this.orderItems = this.orderItems.filter(elem => elem !== id);
+        this.orderItems = this.orderItems.filter(elem => elem.previewItemId !== id);
     }
 
+    markItemAsDone(id: string, done: boolean) {
+        this.orderItems.find(itm => itm.previewItemId === id).done = done;
+    }
+
+    includes(id: string) {
+        return this.selection[id];
+    }
     get selectedItems(): number {
         return this.orderItems.length;
     }
 
+    get confirmed() {
+        return this.state === OrderState.CONFIRMED;
+    }
+
+    get doneItems() {
+        return this.orderItems.filter(itm => itm.done).length;
+    }
+    get progress() {
+        return (this.doneItems * 100) / this.orderItems.length;
+    }
 
 }

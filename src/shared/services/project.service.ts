@@ -36,21 +36,21 @@ export class ProjectService {
     })).pipe(map(projects => projects.sort(cmpByState)));
   }
 
-
-
   saveOrder(projectId: string, order: Order): Observable<any> {
-    return this.http.post(this.projectUrl(projectId) + '/orders', { ...order });
+    return this.http.put(this.projectUrl(projectId) + '/orders', { ...order });
   }
-
   confirmOrder(projectId: string, order: Order): Observable<any> {
     order.confirm();
-    return this.http.post(this.projectUrl(projectId) + '/orders', { ...order });
+    return this.http.put(this.projectUrl(projectId) + '/orders', { ...order });
   }
   completeOrder(projectId: string, order: Order): Observable<any> {
     order.complete();
-    return this.http.post(this.projectUrl(projectId) + '/orders', { ...order });
+    return this.http.put(this.projectUrl(projectId) + '/orders', { ...order });
   }
-
+  markOrderAsDelivered(projectId: string, order: Order): Observable<any> {
+    order.markAsDelivered();
+    return this.http.put(this.projectUrl(projectId) + '/orders', { ...order });
+  }
   confirmPreview(projectId: string): Observable<any> {
     return this.http.patch(this.projectUrl(projectId) + '/', { state: ProjectState.PREVIEW_LOADED });
   }

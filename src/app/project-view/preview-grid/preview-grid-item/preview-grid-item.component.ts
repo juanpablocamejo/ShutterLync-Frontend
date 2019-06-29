@@ -3,7 +3,6 @@ import { MatCheckboxChange } from '@angular/material';
 import { PreviewItem } from 'src/shared/models/PreviewItem';
 import { environment } from 'src/environments/environment';
 
-
 @Component({
   selector: 'app-preview-grid-item',
   templateUrl: './preview-grid-item.component.html',

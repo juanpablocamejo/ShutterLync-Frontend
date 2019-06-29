@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'search', component: SearchViewComponent },
   {
-    path: 'projects:projectId',
+    path: 'projects/:projectId',
     component: ProjectViewComponent,
   },
   {
@@ -32,7 +32,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { section: 'orders', title: 'Pedidos' }
   },
-  { path: 'projects/new', component: ProjectFormComponent, canActivate: [AuthGuard], data: { title: 'Nuevo Proyecto' } },
+  { path: 'new_project', component: ProjectFormComponent, canActivate: [AuthGuard], data: { title: 'Nuevo Proyecto' } },
   { path: 'projects', component: ProjectGridComponent, canActivate: [AuthGuard] },
 ];
 

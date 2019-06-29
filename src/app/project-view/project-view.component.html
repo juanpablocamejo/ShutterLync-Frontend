@@ -5,16 +5,26 @@
       <ng-container *ngSwitchCase="'upload'">
         <app-actions-toolbar [title]="title" [shortTitle]="project.title">
           <span>
-            <button *ngIf="project.created" mat-raised-button color="primary" (click)="confirmPreview()">Confirmar <span
-                fxHide.lt-sm>Muestra</span></button></span>
+            <button *ngIf="project.created" mat-raised-button color="primary" (click)="confirmPreview()">
+              <span>Confirmar</span> <span fxHide.lt-sm>Muestra</span></button></span>
         </app-actions-toolbar>
         <app-project-preview-loader [project]="project">
         </app-project-preview-loader>
       </ng-container>
       <ng-container *ngSwitchCase="'orders'">
         <app-actions-toolbar [title]="title" [shortTitle]="project.title">
-          <span><button *ngIf="project.orderLoaded" mat-raised-button color="primary"
-              (click)="completeOrder()">Finalizar <span fxHide.lt-sm>Pedido</span></button></span>
+          <span class="toolbar-btn">
+            <button *ngIf="project.orderLoaded" mat-raised-button color="primary" (click)="saveOrder()">
+              <span>Guardar</span></button>
+          </span>
+          <span class="toolbar-btn">
+            <button *ngIf="project.orderLoaded && orderProgress==100" mat-raised-button color="primary"
+              (click)="completeOrder()"><span>Finalizar </span> <span fxHide.lt-sm>Pedido</span></button>
+          </span>
+          <span class="toolbar-btn">
+            <button *ngIf="project.completed" mat-raised-button color="primary"
+              (click)="markAsDelivered()"><span>Entregado </span></button>
+          </span>
         </app-actions-toolbar>
         <app-project-orders [project]="project">
         </app-project-orders>

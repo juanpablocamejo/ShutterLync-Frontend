@@ -34,7 +34,6 @@ export class AppComponent {
       }
     });
     route.data.subscribe((data) => {
-      console.log(data);
       this.sectionTitle = data.title;
     });
   }

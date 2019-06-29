@@ -5,14 +5,13 @@ import { SuccessDialogComponent } from '../../dialogs/success-dialog/success-dia
 import { ProjectService } from 'src/shared/services/project.service';
 import { Project } from 'src/shared/models/Project';
 import { OrderState } from 'src/shared/models/enums/OrderState';
+import { ConfirmationDialogComponent } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-preview-grid',
   templateUrl: './preview-grid.component.html',
   styleUrls: ['./preview-grid.component.scss']
 })
-
-
 export class PreviewGridComponent implements OnInit {
   private project: Project;
   public cols = 4;
@@ -36,6 +35,11 @@ export class PreviewGridComponent implements OnInit {
     if (selected) { this.order.add(id); } else { this.order.remove(id); }
   }
 
+  confirmDialog = (title: string, text?: string) => {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title, text, action: 'Aceptar' } });
+    return dialogRef.beforeClose();
+  }
+
   openDialog = () => {
     const dialogRef = this.dialog.open(SuccessDialogComponent, {});
     dialogRef.beforeClose().subscribe(() => {
@@ -55,9 +59,15 @@ export class PreviewGridComponent implements OnInit {
   }
 
   confirmOrder() {
-    this.order.confirm();
-    this.projectService.confirmOrder(this.project.id, this.order)
-      .subscribe(() => { this.openDialog(); });
+    this.confirmDialog('¿Desea confirmar el pedido?', `Costo adicional: $ ${this.aditionalPrice}`).subscribe(
+      (value) => {
+        if (value) {
+          this.projectService.confirmOrder(this.project.id, this.order)
+            .subscribe(() => { this.openDialog(); });
+        }
+      }
+    );
+
   }
 
   ngOnInit() {

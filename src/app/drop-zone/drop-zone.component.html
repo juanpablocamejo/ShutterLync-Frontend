@@ -1,0 +1,35 @@
+<div class="drop-zone-container" fxLayout="row wrap">
+  <div *ngIf="!disableList && files.length" class="upload-list">
+    <ul style=" overflow: auto;">
+      <li *ngFor="let item of files; let i=index" [matTooltip]="getFileError(item)">
+        <span>{{ item.name | lowercase }}</span>
+        <mat-progress-bar mode="determinate" [value]="getFileProgress(item)" [color]="getFileColor(item)">
+        </mat-progress-bar>
+      </li>
+    </ul>
+
+    <button *ngIf="allDone()" mat-button color="primary" (click)=" limpiarListado()">limpiar listado</button>
+  </div>
+  <div class="drop-zone " [ngClass]="{'block-mouse':files.length && !allDone(), 'disabled':disabled}" ngFileDrop
+    [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"
+    [ngClass]="{ 'is-drop-over': dragOver }">
+    <h4>{{dropText}}</h4>
+    <div style="min-width:200px" fxLayout="row" fxLayoutAlign="end end">
+      <label class="upload-button">
+        <button [disabled]="disabled" mat-raised-button color="primary" (click)="folderInput.click()">
+          Subir Carpeta
+        </button>
+        <input [disabled]="disabled" #folderInput style="display:none" className="upload-input" ngFileSelect
+          [options]="options" (uploadOutput)="onUploadOutput($event)" type="file" required webkitdirectory="true"
+          mozdirectory="true" msdirectory="true" odirectory="true" directory="true" allowdirs="true"
+          [uploadInput]="uploadInput" />
+      </label>
+      <label class="upload-button">
+        <button [disabled]="disabled" mat-raised-button color="primary" (click)="fileInput.click()">
+          Subir Archivo
+        </button>
+        <input [disabled]="disabled" #fileInput style="display:none" type="file" ngFileSelect [options]="options"
+          (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"></label>
+    </div>
+  </div>
+</div>

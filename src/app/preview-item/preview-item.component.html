@@ -3,10 +3,6 @@
   <img *ngIf="visible" [hidden]="!loaded" mat-card-image [appXhrSrc]="imgUrl" src="assets/img.jpg" style="height:95%;"
     (load)="onImgLoad($event)">
   <mat-card-actions fxLayoutAlign="space-between center">
-    <div fxFlex="1 1 90%" style="font-size: 12px">{{item.fileName}}</div>
-    <button *ngIf="editable" mat-icon-button (click)="deleteItem()">
-      <mat-icon>close</mat-icon>
-    </button>
+    <ng-content></ng-content>
   </mat-card-actions>
-
 </mat-card>

@@ -13,7 +13,7 @@ export class NewProjectGridItemComponent implements OnInit {
   ngOnInit() {
   }
   newProject() {
-    this.router.navigateByUrl('/projects/new');
+    this.router.navigateByUrl('/new_project');
   }
 
 }

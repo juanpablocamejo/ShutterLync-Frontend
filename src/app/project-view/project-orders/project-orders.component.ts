@@ -2,37 +2,25 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Project } from 'src/shared/models/Project';
 import { OrderState } from 'src/shared/models/enums/OrderState';
+import { PreviewItem } from 'src/shared/models/PreviewItem';
+import { UploadInput } from 'ngx-uploader';
+import { OrderItem } from 'src/shared/models/OrderItem';
+import { ProjectState } from 'src/shared/models/enums/ProjectState';
+import { UploadFile } from 'ngx-file-drop';
 
 interface SelectionDict { [id: string]: { selected: boolean }; }
-interface TableItem { nro: number; fileName: string; cost: number; }
+interface TableItem { nro: number; fileName: string; done: boolean; }
+type GridItem = PreviewItem & OrderItem;
 
 @Component({
   selector: 'app-project-orders',
   templateUrl: './project-orders.component.html',
   styleUrls: ['./project-orders.component.scss']
 })
-
-
 export class ProjectOrdersComponent implements OnInit {
-  @Input() project: Project;
-  public selection: SelectionDict = {};
-  public orderState: OrderState;
-  public loaded = false;
-  orderItems: TableItem[] = [];
-  displayedColumns: string[] = ['nro', 'item'];
 
   constructor(
     public dialog: MatDialog) {
-  }
-
-  ngOnInit() {
-    const qty = this.project.quantity;
-    const unitCost = this.project.aditionalItemPrice;
-    if (this.project.order) {
-      this.orderItems = this.project.previewItems
-        .filter(itm => this.project.selected(itm.id))
-        .map((itm, idx) => ({ nro: idx + 1, fileName: itm.fileName, cost: ((idx + 1) > qty) ? unitCost : 0 }));
-    }
   }
 
   get aditionalQuantity() {
@@ -44,5 +32,49 @@ export class ProjectOrdersComponent implements OnInit {
   get aditionalCost() {
     return this.project.aditionalPrice;
   }
+  @Input() project: Project;
+  editable: boolean;
+  public orderState: OrderState;
+  public loaded = false;
+  previewItems: GridItem[] = [];
+  displayedColumns: string[] = ['nro', 'item'];
+  doneItems = 0;
+
+  ngOnInit(): void {
+    const getPrevItm = (itm: OrderItem) => this.project.getItem(itm.previewItemId);
+    this.editable = this.project.orderLoaded;
+    this.previewItems = this.project.orderItems.map(itm => ({ ...itm, ...getPrevItm(itm) } as GridItem));
+    this.doneItems = this.calcProgress();
+  }
+
+  get progress() {
+    return Math.round(this.doneItems * 100 / this.previewItems.length);
+  }
+  calcProgress() {
+    return this.previewItems.filter(itm => itm.done).length;
+  }
+
+  getItemByName(name: string) {
+    return this.previewItems.find(itm => itm.fileName === name);
+  }
+
+  toggleItem(item: GridItem) {
+    const newValue = !item.done;
+    this.project.markItemAsDone(item.id, newValue);
+    item.done = newValue;
+    this.doneItems += newValue ? 1 : -1;
+  }
+
+  markItemAsDone(file: any) {
+    const item = this.getItemByName(file.name);
+    console.log(file.name, item);
+    if (!item || item.done) { return; }
+
+    this.project.markItemAsDone(item.id, true);
+    this.doneItems += 1;
+    item.done = true;
+
+  }
+
 
 }

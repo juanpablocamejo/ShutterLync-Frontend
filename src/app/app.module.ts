@@ -48,6 +48,9 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
 import { ProjectStatePipe } from 'src/shared/pipes/projectState.pipe';
 import { SpanishMatPaginatorIntl } from 'src/shared/adapters/MatPaginatorIntl';
 import { MatPaginatorIntl } from '@angular/material';
+import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
+import { PreviewItemComponent } from './preview-item/preview-item.component';
+import { DropZoneComponent } from './drop-zone/drop-zone.component';
 registerLocaleData(localeEsAr, 'es-AR');
 
 @NgModule({
@@ -72,7 +75,10 @@ registerLocaleData(localeEsAr, 'es-AR');
     SearchViewComponent,
     ClientSearchFieldComponent,
     RemoveHostDirective,
-    ProjectStatePipe
+    ProjectStatePipe,
+    ConfirmationDialogComponent,
+    PreviewItemComponent,
+    DropZoneComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +99,8 @@ registerLocaleData(localeEsAr, 'es-AR');
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   entryComponents: [
-    SuccessDialogComponent
+    SuccessDialogComponent,
+    ConfirmationDialogComponent
   ],
   providers: [
     LoadingService,

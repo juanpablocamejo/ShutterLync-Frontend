@@ -29,6 +29,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                         errorMessage = `Error: ${error.error.message}`;
                     } else {
                         // server-side error
+                        if (error.status === 404) { return throwError(errorMessage); }
                         errorMessage = error.error.message || 'Error al conectarse con el servidor.';
                     }
                     const showDetail = !(error.error && error.error.showMessage === false);

@@ -5,18 +5,18 @@
   padding: 6px;
 }
 
-.tag.yellow {
-  background-color: #f3bd25;
+.tag._01_created {
+  background-color: #f0c652;
 }
-.tag.green {
+.tag._02_preview_loaded {
   background-color: #a3efe8;
 }
-.tag.lightblue {
+.tag._03_order_loaded {
   background-color: #81c9eb;
 }
-.tag.gray {
-  background-color: #a3b2be;
+.tag._04_completed {
+  background-color: #d48c8c;
 }
-.tag.violet {
-  background-color: #d5c6fb;
+.tag._05_delivered {
+  background-color: #a3baef;
 }

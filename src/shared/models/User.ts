@@ -10,6 +10,6 @@ export class User extends BaseObject {
     role: UserRole;
 
     constructor(fields?: Partial<User>) {
-        super(fields);
+        super(); this.init(fields);
     }
 }

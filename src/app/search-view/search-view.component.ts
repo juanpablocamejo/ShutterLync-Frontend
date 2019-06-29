@@ -54,7 +54,6 @@ export class SearchViewComponent implements OnInit {
   getErrorMessage(form: FormGroup, controlName: string) {
     const errMap = form.controls[controlName].errors || {};
     const errors = Object.keys(errMap);
-    if (!form.controls[controlName].pristine && errors.length) { console.log(controlName, errors); }
     return errors.length ? this.validationMessages[errors[0]] : '';
   }
 
@@ -69,7 +68,7 @@ export class SearchViewComponent implements OnInit {
   }
 
   onSearch() {
-
+    this.dirty = true;
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
@@ -78,7 +77,6 @@ export class SearchViewComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           const { direction } = this.sort;
-          console.log(this.sort);
           const sortPrefix = direction === 'desc' ? '-' : '';
           const pagination = new PaginationOptions({
             sort: sortPrefix + this.sort.active,

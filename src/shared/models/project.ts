@@ -2,19 +2,9 @@ import { BaseObject } from './BaseObject';
 import { PreviewItem } from './PreviewItem';
 import { Order } from './Order';
 import { ProjectState } from './enums/ProjectState';
-export class Client extends BaseObject {
-    constructor(fields?: Partial<Client>) {
-        super(fields);
-    }
-    name: string;
-    lastName: string;
-    email: string;
-    location: string;
+import { Client } from './Client';
 
-    get fullName() {
-        return `${this.lastName}, ${this.name}`;
-    }
-}
+interface PreviewItemMap { [id: string]: PreviewItem; }
 export class Project extends BaseObject {
     id: string;
     title: string;
@@ -27,17 +17,31 @@ export class Project extends BaseObject {
     client: Client;
     order: Order;
     previewItems: PreviewItem[] = [];
-
+    private previewItemsMap: PreviewItemMap;
     quantity: number;
 
     constructor(fields?: Partial<Project>) {
-        super(fields);
-        this.initialize();
+        super(); this.init(fields);
         this.previewItems = (fields.previewItems || []).map(i => new PreviewItem(i));
         this.order = new Order(fields.order, this.previewItems.map(itm => itm.id));
         this.client = new Client(fields.client);
+        this.loadItemsMap();
     }
 
+    loadItemsMap() {
+        this.previewItemsMap = this.previewItems.reduce(
+            (dict, itm) => ({ [itm.id]: itm, ...dict }),
+            {} as PreviewItemMap
+        );
+    }
+
+    get orderProgress() {
+        return this.order.progress;
+    }
+
+    getItem(id: string) {
+        return this.previewItemsMap[id];
+    }
     addPreviewItem(item: PreviewItem) {
         this.previewItems.push(item);
         this.order.addSelectableItem(item.id);
@@ -55,13 +59,28 @@ export class Project extends BaseObject {
     selected(id: string) {
         return this.order.includes(id);
     }
-
-    get orderLoaded() {
-        return this.state === ProjectState.ORDER_LOADED;
+    markItemAsDone(id: string, value: boolean) {
+        this.order.markItemAsDone(id, value);
     }
+
+    // ACCESSORS ESTADOS //
     get created() {
         return this.state === ProjectState.CREATED;
     }
+    get previewLoaded() {
+        return this.state === ProjectState.PREVIEW_LOADED;
+    }
+    get orderLoaded() {
+        return this.state === ProjectState.ORDER_LOADED;
+    }
+    get completed() {
+        return this.state === ProjectState.COMPLETED;
+    }
+    get delivered() {
+        return this.state === ProjectState.DELIVERED;
+    }
+    // ACCESSORS ESTADOS //
+
     get completedSelection() {
         const [sel, total] = [this.selectedItems, this.quantity];
         return sel >= total ? 100 : Math.round((sel * 100) / total);
@@ -79,5 +98,8 @@ export class Project extends BaseObject {
     }
     get totalCost() {
         return this.quotation + this.aditionalPrice;
+    }
+    get orderItems() {
+        return this.order.orderItems;
     }
 }

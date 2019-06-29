@@ -1,9 +1,7 @@
 export class BaseObject {
 
-    constructor(private fields?: any) {
-        this.initialize();
-    }
-    protected initialize() {
-        Object.assign(this, this.fields);
+    protected constructor(fields?: any) { }
+    protected init<T>(fields?: Partial<T>) {
+        Object.assign(this, fields);
     }
 }
