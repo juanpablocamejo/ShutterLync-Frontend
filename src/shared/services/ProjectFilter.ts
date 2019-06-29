@@ -3,7 +3,8 @@ import { BaseObject } from '../models/BaseObject';
 import moment from 'moment';
 export class ProjectFilter extends BaseObject {
     constructor(fields?: Partial<ProjectFilter>) {
-        super(fields);
+        super();
+        this.init(fields);
     }
 
     client: string;
