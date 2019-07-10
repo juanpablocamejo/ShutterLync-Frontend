@@ -11,6 +11,7 @@ import { User } from 'src/shared/models/User';
 import { UserRole } from 'src/shared/models/enums/UserRole';
 import { Project } from 'src/shared/models/Project';
 import { Client } from 'src/shared/models/Client';
+import { getErrorMessage } from 'src/shared/validations/utils';
 
 @Component({
   selector: 'app-project-form',
@@ -24,12 +25,6 @@ export class ProjectFormComponent implements OnInit {
   chkClienteExistente: FormControl = new FormControl(false);
   stepper: MatStepper;
   clientsearch$: Observable<User[]>;
-  validationMessages: { [key: string]: string } = {
-    email: 'ingrese un email válido',
-    required: 'el campo es obligatorio',
-    minlength: 'el texto es demasiado corto',
-    maxlength: 'el texto es demasiado largo',
-  };
   loading: boolean;
 
   constructor(private formBuilder: FormBuilder,
@@ -128,10 +123,7 @@ export class ProjectFormComponent implements OnInit {
   }
 
   getErrorMessage(form: FormGroup, controlName: string) {
-    const errMap = form.controls[controlName].errors || {};
-    const errors = Object.keys(errMap);
-    const msg = errors.length ? this.validationMessages[errors[0]] : '';
-    return msg;
+    return getErrorMessage(form, controlName);
   }
   openDialog() {
     const cfg = new MatDialogConfig();

@@ -26,7 +26,8 @@
         </mat-form-field>
         <mat-form-field>
           <mat-select placeholder="Estado" formControlName="states" multiple>
-            <mat-option *ngFor="let state of projectStates" [value]="state[1]">{{state[1] | ProjectState}}</mat-option>
+            <mat-option *ngFor="let state of projectStates" [value]="state.id">{{state.label}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -73,7 +74,7 @@
         <!-- State Column -->
         <ng-container matColumnDef="state">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
-          <td mat-cell *matCellDef="let row">{{row.state | ProjectState}}</td>
+          <td mat-cell *matCellDef="let row">{{states.getLabel(row.state) | async}}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

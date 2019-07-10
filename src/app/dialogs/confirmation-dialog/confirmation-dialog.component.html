@@ -2,8 +2,13 @@
 <div *ngIf="data.text" mat-dialog-content>
   <p>{{data.text}}</p>
 </div>
+<div *ngIf="data.allowDisableConfirmation">
+  <p>
+    <mat-checkbox [(ngModel)]="disableConfirmation">No volver a preguntar</mat-checkbox>
+  </p>
+</div>
 <mat-dialog-actions align="center">
-  <button mat-raised-button [mat-dialog-close]="true"
+  <button mat-raised-button [mat-dialog-close]="confirmValue"
     [color]="data.color || 'primary'">{{ data.action || 'Aceptar'}}</button>
   <button style="margin-left: 20px;" mat-raised-button [mat-dialog-close]="false">Cancelar</button>
 </mat-dialog-actions>

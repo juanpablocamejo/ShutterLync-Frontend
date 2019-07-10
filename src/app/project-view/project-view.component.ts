@@ -8,7 +8,7 @@ import { ProjectService } from 'src/shared/services/project.service';
 import { Project } from 'src/shared/models/Project';
 import { UserRole } from 'src/shared/models/enums/UserRole';
 import { ConfirmationDialogComponent } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
-import { ProjectState } from 'src/shared/models/enums/ProjectState';
+import { ProjectStates } from 'src/shared/models/enums/ProjectStates';
 
 @Component({
   selector: 'app-project-view',
@@ -88,14 +88,14 @@ export class ProjectViewComponent implements OnInit {
   }
 
   saveOrder() {
-    this.confirmationDialog('¿Desea Guardar los cambios?').subscribe(
-      (value) => {
-        if (value) {
-          this.projectService.saveOrder(this.project.id, this.project.order)
-            .subscribe(this.successDialog(false));
-        }
-      }
-    );
+    // this.confirmationDialog('¿Desea Guardar los cambios?').subscribe(
+    //   (value) => {
+    //     if (value) {
+    this.projectService.saveOrder(this.project.id, this.project.order)
+      .subscribe(this.successDialog(false));
+    // }
+    // }
+    // );
 
   }
   completeOrder() {

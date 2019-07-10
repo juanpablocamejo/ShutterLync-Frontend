@@ -1,5 +1,6 @@
 <div *ngIf="project" class="padd">
-  <p *ngIf="project.created" style="text-align:center">Debe cargar la muestra para que el cliente cargue el pedido.</p>
+  <p *ngIf="project.created" style="text-align:center">Debe confirmar la muestra para que el cliente pueda cargar el
+    pedido.</p>
   <p *ngIf="project.previewLoaded" style="text-align:center">El cliente aún no ha cargado el pedido.</p>
   <ng-container *ngIf="project.orderLoaded || project.completed || project.delivered">
     <div class="header">

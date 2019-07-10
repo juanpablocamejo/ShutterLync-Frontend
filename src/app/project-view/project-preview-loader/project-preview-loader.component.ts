@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material';
 import { AuthenticationService } from 'src/shared/services/authentication.service';
 import { environment } from 'src/environments/environment';
 import { Project } from 'src/shared/models/Project';
-import { ProjectState } from 'src/shared/models/enums/ProjectState';
+import { ProjectStates } from 'src/shared/models/enums/ProjectStates';
 import { PreviewItem } from 'src/shared/models/PreviewItem';
 
 
@@ -17,6 +17,7 @@ export class ProjectPreviewLoaderComponent implements OnInit {
   projectId: string;
   cols = 4;
   @Input() project: Project;
+  disableConfirmation = false;
   constructor(
     private route: ActivatedRoute,
     private snackbar: MatSnackBar,
@@ -42,15 +43,16 @@ export class ProjectPreviewLoaderComponent implements OnInit {
   }
 
   get previewLoaded() {
-    return this.project.state !== ProjectState.CREATED;
+    return this.project.state !== ProjectStates.CREATED;
   }
 
   onFileUploaded(resp: any) {
     this.project.addPreviewItem(new PreviewItem(resp));
   }
 
-  onItemDeleted(itemId: string) {
-    this.project.previewItems = this.previewItems.filter(itm => itm.id !== itemId);
+  onItemDeleted({ value, disableConfirmation }: any) {
+    this.disableConfirmation = disableConfirmation;
+    this.project.previewItems = this.previewItems.filter(itm => itm.id !== value);
   }
 }
 

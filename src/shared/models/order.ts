@@ -1,10 +1,10 @@
 import { BaseObject } from './BaseObject';
-import { OrderState } from './enums/OrderState';
+import { OrderStates } from './enums/OrderStates';
 import { OrderItem } from './OrderItem';
 
 interface SelectionDict { [id: string]: boolean; }
 export class Order extends BaseObject {
-    state: OrderState = OrderState.PENDING;
+    state: OrderStates = OrderStates.PENDING;
     orderItems: OrderItem[] = [];
     selection: SelectionDict = {};
 
@@ -23,13 +23,13 @@ export class Order extends BaseObject {
     }
 
     confirm() {
-        this.state = OrderState.CONFIRMED;
+        this.state = OrderStates.CONFIRMED;
     }
     complete() {
-        this.state = OrderState.COMPLETED;
+        this.state = OrderStates.COMPLETED;
     }
     markAsDelivered() {
-        this.state = OrderState.DELIVERED;
+        this.state = OrderStates.DELIVERED;
     }
 
     addSelectableItem(id: string) {
@@ -62,7 +62,7 @@ export class Order extends BaseObject {
     }
 
     get confirmed() {
-        return this.state === OrderState.CONFIRMED;
+        return this.state === OrderStates.CONFIRMED;
     }
 
     get doneItems() {

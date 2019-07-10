@@ -4,6 +4,9 @@ import { ProjectService } from 'src/shared/services/project.service';
 import { AuthenticationService } from 'src/shared/services/authentication.service';
 import { UserRole } from 'src/shared/models/enums/UserRole';
 import { Project } from 'src/shared/models/Project';
+import { ProjectStateService } from 'src/shared/services/project-state.service';
+import { ProjectStateMap } from 'src/shared/services/ProjectStateMap';
+import { ProjectStates } from 'src/shared/models/enums/ProjectStates';
 
 @Component({
   selector: 'app-project-grid',
@@ -19,11 +22,11 @@ export class ProjectGridComponent implements OnInit {
     private projectService: ProjectService,
     private auth: AuthenticationService
   ) { }
+
   ngOnInit() {
     const user = this.auth.currentUserValue;
     this.isClient = user.role === UserRole.CLIENT;
-    this.projectService.getProjects()
-      .subscribe((projects) => { this.projects = projects; });
+    this.projectService.getProjects().subscribe((projects) => { this.projects = projects; });
   }
 
 }

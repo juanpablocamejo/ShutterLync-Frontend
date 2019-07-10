@@ -1,4 +1,4 @@
-import { ProjectState } from '../models/enums/ProjectState';
+import { ProjectStates } from '../models/enums/ProjectStates';
 import { BaseObject } from '../models/BaseObject';
 import moment from 'moment';
 export class ProjectFilter extends BaseObject {
@@ -8,7 +8,7 @@ export class ProjectFilter extends BaseObject {
     }
 
     client: string;
-    states: ProjectState[];
+    states: ProjectStates[];
     fromDate: Date;
     toDate: Date;
     title: string;

@@ -5,7 +5,7 @@
       <p>{{project.date | date: 'dd/MM/yyyy'}}</p>
       <p [style.visibility]="isClient?'hidden':'visible'">{{project.client.lastName}}, {{project.client.name}}</p>
       <p>
-        <span ngClass="tag _{{project.state}}">{{project.state | ProjectState:isClient}}</span>
+        <span ngClass="tag tag-{{project.state}}">{{stateLabel | async}}</span>
       </p>
     </div>
   </mat-card>

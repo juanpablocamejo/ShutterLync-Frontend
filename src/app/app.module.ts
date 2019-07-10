@@ -51,6 +51,7 @@ import { MatPaginatorIntl } from '@angular/material';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
 import { PreviewItemComponent } from './preview-item/preview-item.component';
 import { DropZoneComponent } from './drop-zone/drop-zone.component';
+import { ConfirmUserComponent } from './confirm-user/confirm-user.component';
 registerLocaleData(localeEsAr, 'es-AR');
 
 @NgModule({
@@ -78,7 +79,8 @@ registerLocaleData(localeEsAr, 'es-AR');
     ProjectStatePipe,
     ConfirmationDialogComponent,
     PreviewItemComponent,
-    DropZoneComponent
+    DropZoneComponent,
+    ConfirmUserComponent
   ],
   imports: [
     BrowserModule,

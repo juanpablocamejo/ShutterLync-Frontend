@@ -1,0 +1,31 @@
+@import "mixins";
+
+.sl-container {
+  height: 100%;
+}
+
+.login-card {
+  background-color: rgba($color: #ffffffc4, $alpha: 0.8);
+  @include respond-to(xs) {
+    height: 350px;
+  }
+  @include respond-to(md) {
+    width: 400px;
+    height: 350px;
+  }
+  @include respond-to(lg) {
+    width: 500px;
+    height: 400px;
+  }
+  input {
+    margin-top: 10px;
+  }
+}
+
+form {
+  padding: 30px;
+  height: 65%;
+  @include respond-to(xs) {
+    padding: 10px;
+  }
+}

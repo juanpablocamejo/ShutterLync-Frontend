@@ -28,24 +28,38 @@ export class AuthenticationService {
     return this.currentTokenSubject.value;
   }
 
+  public get confirmedUser(): boolean {
+    return this.currentTokenSubject.value && this.currentTokenSubject.value !== 'undefined';
+  }
+  public get validUser(): boolean {
+    return !!this.currentUserSubject.value;
+  }
+
   login(email: string, password: string) {
     return this.http.post<any>(`${environment.apiUrl}/auth`, { email, password })
-      .pipe(map(({ status, user, token }) => {
-        // login successful if there's a jwt token in the response
-        if (status === 'ok') {
-          localStorage.setItem('token', token);
-          this.currentTokenSubject.next(token);
-          this.currentUserSubject.next(user);
-          localStorage.setItem('currentUser', JSON.stringify(user));
-        }
-
-        return user;
-      }));
+      .pipe(map(this.saveAuthData.bind(this)));
   }
+
+  confirmUser(email: string, password: string, newPassword: string) {
+    return this.http.post<any>(`${environment.apiUrl}/confirmUser`, { email, password, newPassword })
+      .pipe(map(this.saveAuthData.bind(this)));
+  }
+
+  saveAuthData({ status, user, token }) {
+    if (status === 'ok') {
+      localStorage.setItem('token', token);
+      this.currentTokenSubject.next(token);
+      this.currentUserSubject.next(user);
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    }
+    return user;
+  }
+
 
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+    this.currentTokenSubject.next(null);
   }
 }

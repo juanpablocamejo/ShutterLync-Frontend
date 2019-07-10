@@ -7,8 +7,8 @@
   <div [ngClass]="{'editable':editable, 'preview-container scrollable-view':true}">
     <mat-grid-list [appResponsiveCols]="{ xs: 1, sm: 2, md: 3, lg: 4, xl: 4 }" gutterSize="10px">
       <mat-grid-tile *ngFor="let item of (previewItems || []).slice().reverse()">
-        <app-loader-preview-item class="grid-item" [item]="item" [editable]="editable"
-          (deleted)="onItemDeleted($event)">
+        <app-loader-preview-item class="grid-item" [item]="item" [editable]="editable" (deleted)="onItemDeleted($event)"
+          [disableConfirmation]="disableConfirmation">
         </app-loader-preview-item>
       </mat-grid-tile>
     </mat-grid-list>

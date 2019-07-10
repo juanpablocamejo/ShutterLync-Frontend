@@ -7,10 +7,12 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from 'src/shared/guards/auth.guard';
 import { ProjectViewComponent } from './project-view/project-view.component';
 import { SearchViewComponent } from './search-view/search-view.component';
+import { ConfirmUserComponent } from './confirm-user/confirm-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
+  { path: 'confirmUser', component: ConfirmUserComponent },
   { path: 'search', component: SearchViewComponent },
   {
     path: 'projects/:projectId',

@@ -30,7 +30,8 @@ export class AppComponent {
     });
     router.events.subscribe(evt => {
       if (evt instanceof NavigationEnd) {
-        this.isLoginPage = evt.urlAfterRedirects.toLowerCase() === '/login';
+        const path = evt.urlAfterRedirects.toLowerCase().split('?')[0];
+        this.isLoginPage = ['/login', '/confirmuser'].includes(path);
       }
     });
     route.data.subscribe((data) => {

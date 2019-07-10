@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Project } from 'src/shared/models/Project';
-import { OrderState } from 'src/shared/models/enums/OrderState';
+import { OrderStates } from 'src/shared/models/enums/OrderStates';
 import { PreviewItem } from 'src/shared/models/PreviewItem';
 import { UploadInput } from 'ngx-uploader';
 import { OrderItem } from 'src/shared/models/OrderItem';
-import { ProjectState } from 'src/shared/models/enums/ProjectState';
+import { ProjectStates } from 'src/shared/models/enums/ProjectStates';
 import { UploadFile } from 'ngx-file-drop';
 
 interface SelectionDict { [id: string]: { selected: boolean }; }
@@ -34,7 +34,7 @@ export class ProjectOrdersComponent implements OnInit {
   }
   @Input() project: Project;
   editable: boolean;
-  public orderState: OrderState;
+  public orderState: OrderStates;
   public loaded = false;
   previewItems: GridItem[] = [];
   displayedColumns: string[] = ['nro', 'item'];

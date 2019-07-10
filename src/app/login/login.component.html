@@ -7,9 +7,12 @@
       (keypress)="handleEnter($event)">
       <mat-form-field>
         <input formControlName="email" type="text" maxlength="200" placeholder="email" matInput>
+        <mat-error>{{getErrorMessage(loginForm,'email')}}</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input formControlName="password" type="password" maxlength="200" placeholder="password" matInput>
+        <input formControlName="password" type="password" maxlength="200" placeholder="contraseña" matInput>
+        <mat-error>{{getErrorMessage(loginForm,'password')}}</mat-error>
+
       </mat-form-field>
     </form>
     <mat-card-actions align="center">

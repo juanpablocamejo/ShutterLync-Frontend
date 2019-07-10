@@ -39,6 +39,13 @@ mat-toolbar > button.back {
   bottom: 2px;
 }
 
+div.msg-container {
+  height: 50px;
+}
+
 .scrollable-view {
   height: calc(100vh - 120px);
+}
+.scrollable-view.under-message {
+  height: calc(100vh - 190px);
 }

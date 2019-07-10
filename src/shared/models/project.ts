@@ -1,14 +1,14 @@
 import { BaseObject } from './BaseObject';
 import { PreviewItem } from './PreviewItem';
 import { Order } from './Order';
-import { ProjectState } from './enums/ProjectState';
+import { ProjectStates } from './enums/ProjectStates';
 import { Client } from './Client';
 
 interface PreviewItemMap { [id: string]: PreviewItem; }
 export class Project extends BaseObject {
     id: string;
     title: string;
-    state: ProjectState;
+    state: ProjectStates;
     date: Date;
     location: string;
     notes: string;
@@ -65,19 +65,19 @@ export class Project extends BaseObject {
 
     // ACCESSORS ESTADOS //
     get created() {
-        return this.state === ProjectState.CREATED;
+        return this.state === ProjectStates.CREATED;
     }
     get previewLoaded() {
-        return this.state === ProjectState.PREVIEW_LOADED;
+        return this.state === ProjectStates.PREVIEW_LOADED;
     }
     get orderLoaded() {
-        return this.state === ProjectState.ORDER_LOADED;
+        return this.state === ProjectStates.ORDER_LOADED;
     }
     get completed() {
-        return this.state === ProjectState.COMPLETED;
+        return this.state === ProjectStates.COMPLETED;
     }
     get delivered() {
-        return this.state === ProjectState.DELIVERED;
+        return this.state === ProjectStates.DELIVERED;
     }
     // ACCESSORS ESTADOS //
 

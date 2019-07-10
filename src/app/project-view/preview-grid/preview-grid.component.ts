@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SuccessDialogComponent } from '../../dialogs/success-dialog/success-dialog.component';
 import { ProjectService } from 'src/shared/services/project.service';
 import { Project } from 'src/shared/models/Project';
-import { OrderState } from 'src/shared/models/enums/OrderState';
+import { OrderStates } from 'src/shared/models/enums/OrderStates';
 import { ConfirmationDialogComponent } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
@@ -19,6 +19,7 @@ export class PreviewGridComponent implements OnInit {
   constructor(
     private projectService: ProjectService,
     public dialog: MatDialog,
+    public router: Router,
     private route: ActivatedRoute) {
   }
 
@@ -43,20 +44,24 @@ export class PreviewGridComponent implements OnInit {
   openDialog = () => {
     const dialogRef = this.dialog.open(SuccessDialogComponent, {});
     dialogRef.beforeClose().subscribe(() => {
+      this.router.navigateByUrl('projects');
     });
   }
 
+  get hasMessage() {
+    return !this.pending;
+  }
   get confirmed() {
-    return this.order.state === OrderState.CONFIRMED;
+    return this.order.state === OrderStates.CONFIRMED;
   }
   get completed() {
-    return this.order.state === OrderState.COMPLETED;
+    return this.order.state === OrderStates.COMPLETED;
   }
   get pending() {
-    return this.order.state === OrderState.PENDING;
+    return this.order.state === OrderStates.PENDING;
   }
   get delivered() {
-    return this.order.state === OrderState.DELIVERED;
+    return this.order.state === OrderStates.DELIVERED;
   }
 
   saveOrder() {

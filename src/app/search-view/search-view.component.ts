@@ -8,9 +8,9 @@ import { UserService } from 'src/shared/services/user.service';
 import { ProjectService } from 'src/shared/services/project.service';
 import { Project } from 'src/shared/models/Project';
 import { ProjectFilter } from 'src/shared/services/ProjectFilter';
-import { ProjectState } from 'src/shared/models/enums/ProjectState';
+import { ProjectState } from 'src/shared/models/ProjectState';
 import { PaginationOptions } from 'src/shared/services/PaginationOptions';
-
+import { ProjectStateService } from 'src/shared/services/project-state.service';
 
 @Component({
   selector: 'app-search-view',
@@ -22,7 +22,7 @@ export class SearchViewComponent implements OnInit {
   showFilters = true;
   displayedColumns: string[] = ['date', 'state', 'client', 'title'];
   data: Project[] = [];
-  projectStates = Object.entries(ProjectState);
+  projectStates: ProjectState[];
   dirty = false;
   resultsLength = 0;
 
@@ -36,7 +36,13 @@ export class SearchViewComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private projectService: ProjectService,
-              private router: Router) {
+              private router: Router,
+              private states: ProjectStateService) {
+    states.getAll().subscribe((data) => {
+      console.log(data);
+      this.projectStates = data;
+    }
+    );
   }
 
   get clientSelected() {
@@ -50,6 +56,7 @@ export class SearchViewComponent implements OnInit {
       states: [null],
       title: [null]
     });
+
   }
   getErrorMessage(form: FormGroup, controlName: string) {
     const errMap = form.controls[controlName].errors || {};
