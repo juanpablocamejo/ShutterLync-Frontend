@@ -36,7 +36,7 @@
     "intersection-observer": "^0.5.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.11",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "ng-in-viewport": "^6.0.3",
     "ngx-file-drop": "^6.0.0",
     "ngx-uploader": "^7.1.0",
